@@ -1,0 +1,47 @@
+.forgotPassword > a {
+	text-decoration: none;
+	color: #333;
+	transition: text-decoration 0.3s;
+}
+
+.forgotPassword > a:hover {
+	text-decoration: underline;
+}
+
+.inputGroup {
+	display: flex;
+	flex-direction: column;
+	row-gap: 12px;
+	margin-bottom: 12px;
+}
+
+.forgotPassword {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 20px;
+}
+
+.divider {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	position: relative;
+	margin-bottom: 24px;
+}
+
+.divider::before,
+.divider::after {
+	content: "";
+	top: 60%;
+	position: absolute;
+	width: 100%;
+	border-top: 1px solid #708fac;
+}
+
+.divider span {
+	width: 50px;
+	background-color: #fff;
+	color: #8f8d8d;
+	z-index: 1;
+}

@@ -1,0 +1,22 @@
+.courseRating {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 8px;
+}
+
+.stars {
+	width: 90px;
+	height: 18px;
+}
+
+.courseRating > p {
+	color: rgba(51, 51, 51, 0.7);
+	font-size: 0.75em;
+}
+
+@media screen and (min-width: 768px) {
+	.courseRating p {
+		font-size: 14px;
+	}
+}

@@ -1,0 +1,40 @@
+.header {
+	display: flex;
+	align-items: center;
+	position: fixed;
+	width: 100%;
+	top: 0;
+	z-index: 999;
+	padding: 12px 90px;
+	height: 70px;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+	background-color: #fff;
+}
+
+.content {
+	margin: 70px auto 0;
+	padding: 28px 20px;
+}
+
+hr {
+	height: 1px;
+	margin: 16px 0;
+	border: 1px solid rgba(58, 53, 65, 0.2);
+}
+
+footer {
+	padding: 20px;
+}
+
+@media screen and (min-width: 1080px) {
+	.content,
+	footer {
+		padding: 28px 90px;
+	}
+}
+
+@media screen and (max-width: 1079px) {
+	.header {
+		padding: 12px 20px;
+	}
+}
