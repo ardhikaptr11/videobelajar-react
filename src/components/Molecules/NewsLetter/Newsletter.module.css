@@ -1,0 +1,64 @@
+.newsletter {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 400px;
+	padding: 37px 20px;
+	margin-top: 24px;
+	text-align: center;
+	background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+		url(../../../assets/newsletter-background.jpeg) center/cover;
+	border-radius: 4px;
+	color: #fff;
+}
+
+.newsletter > h3 {
+	font-size: 1.5em;
+	font-weight: 600;
+	margin-bottom: 10px;
+	line-height: 26.4px;
+}
+
+.newsletter > h3:first-child {
+	text-transform: uppercase;
+	font-weight: 500;
+	font-size: 1em;
+	letter-spacing: 0.2px;
+	line-height: 22.4px;
+	margin-bottom: 4px;
+}
+
+.newsletter > p {
+	font-size: .875em;
+	font-weight: 300;
+	line-height: 19.6px;
+	letter-spacing: 0.2px;
+	margin-bottom: 24px;
+}
+
+@media screen and (min-width: 768px) {
+	.newsletter {
+		margin-top: 64px;
+	}
+}
+
+@media screen and (min-width: 992px) {
+	.newsletter {
+		padding: 46px 175px;
+	}
+
+	.newsletter > h3 {
+		font-size: 2em;
+		line-height: 35.2px;
+	}
+
+	.newsletter > h3:first-child {
+		font-size: 1.25em;
+		line-height: 25.2px;
+	}
+
+    .newsletter > p {
+        font-size: 1em;
+    }
+}
