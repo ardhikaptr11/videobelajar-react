@@ -1,0 +1,43 @@
+.header {
+	background-color: #fff;
+	width: 100%;
+	height: 70px;
+	padding: 10px 24px;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+}
+
+.content {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.loginPage {
+	height: calc(100vh - 70px);
+}
+
+.registerPage {
+	height: auto;
+}
+
+@media screen and (max-height: 570px) {
+	.content.loginPage {
+		position: relative;
+		height: 100vh;
+		margin: 70px 0 24px;
+	}
+
+	.header.loginHeader {
+		position: fixed;
+		top: 0;
+		z-index: 999;
+	}
+}
+
+@media screen and (max-height: 926px) {
+	.header.registerHeader {
+		position: fixed;
+		top: 0;
+		z-index: 999;
+	}
+}

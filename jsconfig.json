@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "ES6",
+        "baseUrl": "./src",
+        "paths": {
+            "@assets/*": [
+                "assets/*"
+            ],
+            "@components/*": [
+                "components/*"
+            ],
+            "@pages/*": [
+                "pages/*"
+            ]
+        },
+        "checkJs": true
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

@@ -1,0 +1,66 @@
+.accordion {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 12px;
+}
+
+.title {
+	font-weight: 900;
+	line-height: 22.4px;
+	letter-spacing: 0.2px;
+	color: rgb(34, 35, 37);
+}
+
+.chevronForward {
+	width: 7.5px;
+	height: 12px;
+	cursor: pointer;
+}
+
+.chevronForward:hover {
+	transform: translateX(2px);
+}
+
+.itemList {
+	display: none;
+}
+
+.item {
+	width: fit-content;
+}
+
+@media screen and (min-width: 1200px) {
+	.accordion {
+		display: block;
+		margin-top: 0;
+	}
+
+	.accordion:nth-child(2) {
+		grid-area: company;
+	}
+
+	.accordion:not(:last-child) {
+		margin-right: 48px;
+	}
+
+	.chevronForward {
+		display: none;
+	}
+
+	.itemList {
+		display: block;
+	}
+
+	.item {
+		list-style-type: none;
+	}
+
+	.item:first-child {
+		margin-top: 15px;
+	}
+
+	.item:not(:last-child) {
+		margin-bottom: 13px;
+	}
+}
