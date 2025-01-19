@@ -1,0 +1,38 @@
+.mainNavbar {
+	display: flex;
+	width: 100%;
+	gap: 36px;
+}
+
+.navContent {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: inherit;
+}
+
+.category {
+	color: #1d2433;
+	font-size: 1em;
+}
+
+.hamburger {
+	cursor: pointer;
+	display: none;
+}
+
+.userAvatar {
+	width: 44px;
+	height: 44px;
+}
+
+@media screen and (max-width: 768px) {
+	.category,
+	.userAvatar {
+		display: none;
+	}
+
+	.hamburger {
+		display: block;
+	}
+}

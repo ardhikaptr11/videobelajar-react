@@ -1,0 +1,13 @@
+.cardFooter {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.pricing {
+	font-weight: 600;
+	font-family: "Poppins", sans-serif;
+	font-size: 1.25em;
+	line-height: 24px;
+	color: #3ecf4c;
+}

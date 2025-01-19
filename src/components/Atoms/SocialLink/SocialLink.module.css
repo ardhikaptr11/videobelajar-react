@@ -1,0 +1,28 @@
+.socialLink {
+	margin-bottom: 12px;
+	width: fit-content;
+}
+
+.socialLink a {
+	display: inline-flex;
+	align-items: center;
+	padding: 8px;
+	border: 1.5px solid #222325;
+	border-radius: 50%;
+}
+
+.socialLink a:not(:first-child) {
+	margin-left: 15px;
+}
+
+ion-icon {
+	font-size: 1.25em;
+	color: #222325;
+}
+
+@media screen and (min-width: 1200px) {
+	.socialLink {
+		order: 2;
+		margin-bottom: 0;
+	}
+}

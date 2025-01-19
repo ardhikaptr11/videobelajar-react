@@ -1,0 +1,28 @@
+.name {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 19.6px;
+    color: #000;
+}
+
+.job {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16.8px;
+
+}
+
+.name, .job {
+    letter-spacing: 0.2px;
+}
+
+
+@media screen and (min-width: 768px) {
+    .name {
+        font-size: 16px;
+    }
+
+    .job {
+        font-size: 14px;
+    }
+}
