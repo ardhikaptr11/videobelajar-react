@@ -28,6 +28,12 @@
 
 .item {
 	width: fit-content;
+	cursor: pointer;
+}
+
+.item:hover {
+	color: #333;
+	transform: scale(1.05);
 }
 
 @media screen and (min-width: 1200px) {
