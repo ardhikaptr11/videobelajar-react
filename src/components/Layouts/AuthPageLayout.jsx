@@ -1,22 +1,28 @@
 import AuthNavbar from "@components/Molecules/Navbar/AuthNavbar";
-import styles from "@components/Layouts/AuthPageLayout.module.css";
 import PropTypes from "prop-types";
 
-const AuthPageLayout = ({ formType, children }) => {
+const AuthPageLayout = ({ authType, children }) => {
 	return (
 		<>
-			<header className={`${styles.header} ${formType === "login" ? styles.loginHeader : styles.registerHeader}`}>
+			<header
+				className={`bg-white py-2.5 px-6 w-full h-[70px] shadow-md ${
+					authType === "login" ? "navbar-login" : "navbar-register"
+				}`}>
 				<AuthNavbar />
 			</header>
-			<main className={`${styles.content} ${formType === "login" ? styles.loginPage : styles.registerPage}`}>
+			<main
+				className={
+					authType === "login" ? "flex relative items-center login-max-h-570" : "flex relative items-center"
+				}>
 				{children}
 			</main>
 		</>
 	);
 };
 
+
 AuthPageLayout.propTypes = {
-	formType: PropTypes.string.isRequired,
+	authType: PropTypes.string,
 	children: PropTypes.node.isRequired
 };
 

@@ -1,12 +1,11 @@
 import PropTypes from "prop-types";
-import styles from "./CategoriesTab.module.css";
 
 const CategoriesTab = ({ categories }) => {
 	return (
-		<div className={styles.categoriesTab}>
+		<div className="overflow-x-auto whitespace-nowrap bg-transparent">
 			{categories.map((category, index) => {
 				return (
-					<a key={index} href="#" className={styles.category}>
+					<a key={index} href="#" className="inline-block text-center leading-none p-[14px_0] no-underline text-black cursor-pointer first:text-[#ff5733] not-[last-child]:mr-[10px]">
 						{category}
 					</a>
 				);

@@ -4,7 +4,7 @@ import AuthPageLayout from "../../components/Layouts/AuthPageLayout";
 
 const Login = () => {
 	return (
-		<AuthPageLayout formType="login">
+		<AuthPageLayout authType="login">
 			<AuthBox title="Masuk ke Akun" subtitle="Yuk, lanjutin belajarmu di videobelajar">
 				<LoginForm />
 			</AuthBox>

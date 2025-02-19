@@ -17,7 +17,7 @@ const HomePageLayout = () => {
 			<header className={styles.header}>
 				<MainNavbar />
 			</header>
-			<main className={styles.content}>
+			<main className="m-[70px_auto_0] p-[28px_20px] min-[1080px]:p-[28px_90px]">
 				<Heroku
 					tagline="Revolusi Pembelajaran: Temukan Ilmu Baru melalui Platform Video Interaktif!"
 					description="Temukan ilmu baru yang menarik dan mendalam melalui koleksi video pembelajaran berkualitas tinggi.
@@ -37,7 +37,7 @@ const HomePageLayout = () => {
 					childText="Temukan ilmu baru yang menarik dan mendalam melalui koleksi video pembelajaran berkualitas tinggi. Tidak hanya itu, Anda juga dapat berpartisipasi dalam latihan interaktif yang akan meningkatkan pemahaman Anda."
 				/>
 			</main>
-			<footer className={styles.footer}>
+			<footer className="p-5 min-[1080px]:p-[28px_90px]">
 				<FooterContent>
 					<FooterBody
 						companyInfo={{
@@ -46,7 +46,7 @@ const HomePageLayout = () => {
 							contact: "62-877-7123-1234"
 						}}
 					/>
-					<hr />
+					<hr className="h-px border-1 border-solid border-[#3a354133]" />
 					<FooterFoot
 						license={{ year: new Date().getFullYear(), company: "Videobelajar" }}
 						socials={["linkedin", "facebook", "instagram", "twitter"]}

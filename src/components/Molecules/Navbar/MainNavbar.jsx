@@ -2,7 +2,6 @@ import styles from './MainNavbar.module.css';
 import brandLogo from '@assets/videobelajar-logo.png';
 import hamburgerIcon from '@assets/hamburger-icon.png';
 import userAvatar from '@assets/user-avatar.png';
-import "@components/style.css";
 
 
 const MainNavbar = () => {
