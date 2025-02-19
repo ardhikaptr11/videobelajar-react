@@ -2,12 +2,11 @@ import InputWithLabel from "@components/Molecules/InputWithLabel/InputWithLabel"
 import Button from "@components/Atoms/Button/Button";
 import googleIcon from "@assets/google-icon.png";
 import showPasswordIcon from "@assets/eye-off.png";
-import "./form.css";
 
 const LoginForm = () => {
 	return (
 		<form>
-			<div className="inputGroup">
+			<div className="flex flex-col gap-y-3 mb-3">
 				<InputWithLabel label="E-Mail" type="email" name="email" id="email" autoComplete="email" />
 				<InputWithLabel
 					label="Password"
@@ -18,14 +17,16 @@ const LoginForm = () => {
 					autoComplete="current-password"
 				/>
 			</div>
-			<div className="forgotPassword">
+			<div className="flex justify-end mb-5">
 				<a href="#">Lupa Password?</a>
 			</div>
-			<div className="buttonGroup">
-				<Button type="button" id="login" text="Masuk"/>
+			<div className="flex flex-col">
+				<Button type="button" id="login" text="Masuk" />
 				<Button type="button" id="signup" text="Daftar" />
-				<div className="divider">
-					<span>atau</span>
+				<div className="flex justify-center items-center text-center relative mb-6">
+					<span className="top-[60%] absolute w-full border-t-[1px] border-t-[#708fac]"></span>
+					<span className="w-[50px] bg-white text-[#8f8d8d] z-1">atau</span>
+					<span className="top-[60%] absolute w-full border-t-[1px] border-t-[#708fac]"></span>
 				</div>
 				<Button type="button" id="sso" text="Masuk dengan Google" icon={googleIcon} />
 			</div>

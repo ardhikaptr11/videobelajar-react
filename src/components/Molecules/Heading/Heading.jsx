@@ -1,10 +1,9 @@
-import styles from "./Heading.module.css";
 import PropTypes from "prop-types";
 
 const Heading = ({ headingText, childText}) => {
 	return (
-		<div className={styles.courseHeading}>
-			<h3>{headingText}</h3>
+		<div className="flex flex-col gap-y-2.5">
+			<h3 className="leading-none text-black">{headingText}</h3>
 			<p>{childText}</p>
 		</div>
 	);

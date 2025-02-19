@@ -1,10 +1,9 @@
 import CourseCard from "../CourseCard/CourseCard";
-import styles from "./CourseList.module.css";
 import PropTypes from "prop-types";
 
 const CourseList = ({ courses }) => {
     return (
-        <div className={styles.courseList}>
+        <div className="flex flex-wrap gap-6 justify-start">
             {courses.map((course, index) => (
                 <CourseCard key={index} course={course} />
             ))}
