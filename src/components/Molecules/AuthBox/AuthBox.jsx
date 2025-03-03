@@ -1,12 +1,17 @@
 import PropTypes from "prop-types";
-import style from "./AuthBox.module.css";
 
-const AuthBox = ({ title, subtitle, action, children }) => {
+const AuthBox = ({ title, subtitle, children, action }) => {
+	// Helper function to determine class based on form action type for layouting purposes
+	const setClasses = () => {
+		let setOfClasses = "flex relative flex-col p-5 w-[590px]";
+		return action === "register" ? `${setOfClasses} mt-[70px] mb-[24px] mx-auto` : `${setOfClasses} m-auto`;
+	};
+
 	return (
-		<section className={`${style.authBox} ${action === "register" ? style.register : style.login}`}>
-			<div className={style.headingText}>
-				<h2>{title}</h2>
-				<p>{subtitle}</p>
+		<section className={setClasses()}>
+			<div className="text-center mb-5">
+				<h2 className="text-[2em] max-[576px]:text-[1.5em] text-black font-bold">{title}</h2>
+				<p className="text-[1em] max-[576px]:text-[0.875em] text-[#333]">{subtitle}</p>
 			</div>
 			{children}
 		</section>
@@ -16,8 +21,8 @@ const AuthBox = ({ title, subtitle, action, children }) => {
 AuthBox.propTypes = {
 	title: PropTypes.string.isRequired,
 	subtitle: PropTypes.string.isRequired,
-	action: PropTypes.string.isRequired,
-	children: PropTypes.node.isRequired
+	children: PropTypes.node.isRequired,
+	action: PropTypes.string
 };
 
 export default AuthBox;

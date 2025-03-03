@@ -1,20 +1,15 @@
 import InstructorInfo from "@components/Atoms/InstructorInfo/InstructorInfo";
-import PropTypes from "prop-types";
-import styles from "./Instructor.module.css";
 
-const Instructor = ({ avatar, name, job }) => {
+const Instructor = ({ ...instructors }) => {
+	const instructor = instructors[0];
+	const { avatar, name, job, company } = instructor;
+
 	return (
-		<div className={styles.instructor}>
-			<img src={avatar} alt={name} className={styles.avatar} />
-			<InstructorInfo name={name} job={job} />
+		<div className="flex items-center gap-2">
+			<img src={avatar} alt={name} className="size-[36px] rounded-[10px]" />
+			<InstructorInfo name={name} job={job} company={company} />
 		</div>
 	);
-};
-
-Instructor.propTypes = {
-	avatar: PropTypes.string.isRequired,
-	name: PropTypes.string.isRequired,
-	job: PropTypes.string.isRequired
 };
 
 export default Instructor;
