@@ -1,41 +1,20 @@
-import Course from "@components/Organisms/Course/Course";
+import { Outlet } from "react-router";
+
 import MainNavbar from "@components/Molecules/Navbar/MainNavbar";
-import Heroku from "@components/Molecules/Heroku/Heroku";
-import Heading from "@components/Molecules/Heading/Heading";
-import CategoriesTab from "@components/Molecules/CategoriesTab/CategoriesTab";
-import Newsletter from "@components/Molecules/NewsLetter/Newsletter";
-import CourseList from "@components/Molecules/CourseList/CourseList";
 import FooterContent from "@components/Molecules/FooterContent/FooterContent";
 import FooterBody from "@components/Molecules/FooterBody/FooterBody";
 import FooterFoot from "@components/Molecules/FooterFoot/FooterFoot";
-import styles from "@components/Layouts/HomePageLayout.module.css";
-import courses from "../../data";
+import DropdownMenu from "@components/Molecules/DropdownMenu/DropdownMenu";
 
 const HomePageLayout = () => {
 	return (
 		<>
-			<header className={styles.header}>
+			<header className="flex items-center fixed w-full top-0 z-999 bg-white shadow-md p-[12px_90px] h-[70px] max-[1079px]:p-[12px_20px]">
 				<MainNavbar />
 			</header>
+			<DropdownMenu />
 			<main className="m-[70px_auto_0] p-[28px_20px] min-[1080px]:p-[28px_90px]">
-				<Heroku
-					tagline="Revolusi Pembelajaran: Temukan Ilmu Baru melalui Platform Video Interaktif!"
-					description="Temukan ilmu baru yang menarik dan mendalam melalui koleksi video pembelajaran berkualitas tinggi.
-					Tidak hanya itu, Anda juga dapat berpartisipasi dalam latihan interaktif yang akan meningkatkan
-					pemahaman Anda."
-				/>
-				<Course>
-					<Heading
-						headingText="Koleksi Video Pembelajaran Unggulan"
-						childText="Jelajahi Dunia Pengetahuan Melalui Pilihan Kami!"
-					/>
-					<CategoriesTab categories={["Semua Kelas", "Pemasaran", "Desain", "Pengembangan Diri", "Bisnis"]} />
-					<CourseList courses={courses} />
-				</Course>
-				<Newsletter
-					headingText="Mau Belajar Lebih Banyak?"
-					childText="Temukan ilmu baru yang menarik dan mendalam melalui koleksi video pembelajaran berkualitas tinggi. Tidak hanya itu, Anda juga dapat berpartisipasi dalam latihan interaktif yang akan meningkatkan pemahaman Anda."
-				/>
+				<Outlet />
 			</main>
 			<footer className="p-5 min-[1080px]:p-[28px_90px]">
 				<FooterContent>
