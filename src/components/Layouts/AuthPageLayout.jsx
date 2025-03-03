@@ -1,23 +1,22 @@
-import AuthNavbar from "@components/Molecules/Navbar/AuthNavbar";
-import styles from "@components/Layouts/AuthPageLayout.module.css";
-import PropTypes from "prop-types";
+import { Outlet } from "react-router";
 
-const AuthPageLayout = ({ formType, children }) => {
+import AuthNavbar from "@components/Molecules/Navbar/AuthNavbar";
+import storeNavigation from "@store/storeNavigation";
+
+const AuthPageLayout = () => {
+	const location = storeNavigation((state) => state.location);
+
 	return (
 		<>
-			<header className={`${styles.header} ${formType === "login" ? styles.loginHeader : styles.registerHeader}`}>
+			<header
+				className={`bg-white py-2.5 px-6 w-full h-[70px] shadow-md ${
+					location === "/login" || location === "/recovery" ? "navbar" : "navbar-register"
+				}`}>
 				<AuthNavbar />
 			</header>
-			<main className={`${styles.content} ${formType === "login" ? styles.loginPage : styles.registerPage}`}>
-				{children}
-			</main>
+			<Outlet />
 		</>
 	);
-};
-
-AuthPageLayout.propTypes = {
-	formType: PropTypes.string.isRequired,
-	children: PropTypes.node.isRequired
 };
 
 export default AuthPageLayout;

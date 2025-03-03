@@ -1,7 +1,0 @@
-@media screen and (min-width: 1200px) {
-	.footerBody {
-		display: grid;
-		grid-template-columns: 1fr repeat(3, auto);
-		grid-template-areas: "company-info company category community";
-	}
-}

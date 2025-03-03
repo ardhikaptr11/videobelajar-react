@@ -16,21 +16,8 @@
 	padding: 28px 20px;
 }
 
-hr {
-	height: 1px;
-	margin: 16px 0;
-	border: 1px solid rgba(58, 53, 65, 0.2);
-}
-
 footer {
 	padding: 20px;
-}
-
-@media screen and (min-width: 1080px) {
-	.content,
-	footer {
-		padding: 28px 90px;
-	}
 }
 
 @media screen and (max-width: 1079px) {
@@ -38,3 +25,10 @@ footer {
 		padding: 12px 20px;
 	}
 }
+@media screen and (min-width: 1080px) {
+	.content,
+	footer {
+		padding: 28px 90px;
+	}
+}
+
