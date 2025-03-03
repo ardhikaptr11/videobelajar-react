@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 const Breadcrumb = ({ category, title }) => {
 	return (
-		<nav className="flex flex-wrap items-center gap-1 p-1">
+		<nav className="flex flex-wrap items-center gap-1 p-1 max-[390px]:line-clamp-1 text-ellipsis">
 			<a
 				href="/"
 				className="inline-flex items-center gap-1.5 text-base/[22.4px] font-normal tracking-[0.0125em] text-[#3A3541] opacity-68">
