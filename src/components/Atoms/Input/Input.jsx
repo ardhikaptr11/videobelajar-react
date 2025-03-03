@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 
+// TODO: Will be refactored in future work
 const Input = ({ type, name, id, children, ...props }) => {
 	const setInputStyle = () => {
 		let setOfClasses;
@@ -7,8 +8,7 @@ const Input = ({ type, name, id, children, ...props }) => {
 		id === "newsletter"
 			? (setOfClasses =
 					"border-none outline-none rounded-[10px] p-[10px_8px] bg-white text-[#333333] text-center placeholder:text-center min-[992px]:text-start min-[992px]:placeholder:text-start min-[992px]:placeholder:ml-2.5 newsletter-input-lg-screen")
-			: (setOfClasses =
-					"h-[36px] border-1 border-solid border-[#3a354166] rounded-[6px] text-base");
+			: (setOfClasses = "h-[36px] border-1 border-solid border-[#3a354166] rounded-[6px] text-base");
 
 		id === "countryCode"
 			? (setOfClasses = `${setOfClasses} rounded-s-none p-[4px_6px]`)

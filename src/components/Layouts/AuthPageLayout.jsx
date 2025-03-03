@@ -1,29 +1,22 @@
-import AuthNavbar from "@components/Molecules/Navbar/AuthNavbar";
-import PropTypes from "prop-types";
+import { Outlet } from "react-router";
 
-const AuthPageLayout = ({ authType, children }) => {
+import AuthNavbar from "@components/Molecules/Navbar/AuthNavbar";
+import storeNavigation from "@store/storeNavigation";
+
+const AuthPageLayout = () => {
+	const location = storeNavigation((state) => state.location);
+
 	return (
 		<>
 			<header
 				className={`bg-white py-2.5 px-6 w-full h-[70px] shadow-md ${
-					authType === "login" ? "navbar-login" : "navbar-register"
+					location === "/login" || location === "/recovery" ? "navbar" : "navbar-register"
 				}`}>
 				<AuthNavbar />
 			</header>
-			<main
-				className={
-					authType === "login" ? "flex relative items-center login-max-h-570" : "flex relative items-center"
-				}>
-				{children}
-			</main>
+			<Outlet />
 		</>
 	);
-};
-
-
-AuthPageLayout.propTypes = {
-	authType: PropTypes.string,
-	children: PropTypes.node.isRequired
 };
 
 export default AuthPageLayout;

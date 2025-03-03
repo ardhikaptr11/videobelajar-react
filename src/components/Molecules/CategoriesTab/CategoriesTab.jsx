@@ -5,7 +5,10 @@ const CategoriesTab = ({ categories }) => {
 		<div className="overflow-x-auto whitespace-nowrap bg-transparent">
 			{categories.map((category, index) => {
 				return (
-					<a key={index} href="#" className="inline-block text-center leading-none p-[14px_0] no-underline text-black cursor-pointer first:text-[#ff5733] not-[last-child]:mr-[10px]">
+					<a
+						key={index}
+						href="#"
+						className="inline-block text-center leading-none p-[14px_0] no-underline text-black cursor-pointer first:text-[#ff5733] not-[last-child]:mr-[10px]">
 						{category}
 					</a>
 				);
