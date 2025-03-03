@@ -1,7 +1,6 @@
 import Accordion from "@components/Atoms/Accordion/Accordion";
 import CompanyProfile from "@components/Atoms/CompanyProfile/CompanyProfile";
 import PropTypes from "prop-types";
-import styles from "./FooterBody.module.css";
 
 const accordionItems = [
 	{
@@ -20,7 +19,7 @@ const accordionItems = [
 
 const FooterBody = ({ companyInfo }) => {
 	return (
-		<div className={styles.footerBody}>
+		<div className="min-[1200px]:grid min-[1200px]:grid-cols-[1fr_repeat(3,_auto)]">
 			<CompanyProfile companyInfo={companyInfo} />
 			{accordionItems.map((item, index) => (
 				<Accordion key={index} title={item.title} itemList={item.itemList} />

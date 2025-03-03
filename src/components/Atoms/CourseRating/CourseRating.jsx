@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types';
-import styles from './CourseRating.module.css';
 import ratingStars from "@assets/rating-stars.png";
 
 
 const CourseRating = ({ rating, totalReviews }) => {
     return (
-        <div className={styles.courseRating}>
-            <img src={ratingStars} alt="Rating star of the course" className={styles.stars} />
-            <p><u>{rating} ({totalReviews})</u></p>
+        <div className="flex justify-between items-center gap-2">
+            <img src={ratingStars} alt="Rating star of the course" className="w-[90px] h-[18px]" />
+            <p className="text-[0.75em] min-[768px]:text-[0.875em]"><u>{rating} ({totalReviews})</u></p>
         </div>
     )
 }
