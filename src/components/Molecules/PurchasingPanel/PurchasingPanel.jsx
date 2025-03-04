@@ -44,13 +44,31 @@ const PurchasingPanel = ({ course }) => {
 				)}
 			</div>
 			<div className="flex flex-col gap-y-4">
-				<Button type="button" id="purchase" text="Beli Sekarang" grouped={true} />
-				{!isLoggedIn && <Button type="button" style="outline" id="share" text="Bagikan Kelas" grouped={true} />}
+				<Button
+					type="button"
+					id="purchase"
+					text="Beli Sekarang"
+					style="w-full h-[36px] mb-0 p-[7px_22px]  bg-[#3ecf4c] hover:bg-[#36b343] border-none"
+					textStyle="font-bold font-button leading-none text-white"
+				/>
+				{!isLoggedIn && (
+					<Button
+						type="button"
+						id="share"
+						text="Bagikan Kelas"
+						style="w-full h-[36px] mb-0 p-[7px_22px] border-[1px] border-solid border-[#3ecf4c] bg-transparent hover:bg-[#e9fde2]"
+						textStyle="font-bold font-button leading-none text-[#3ecf4c] group-hover:text-[#36b343]"
+					/>
+				)}
 			</div>
 			<CourseFeatures course={course} />
 		</aside>
 	);
 };
+
+// purchase -> className="block outline-none cursor-pointer rounded-[10px] text-[1em] group w-full h-[36px] mb-0 p-[7px_22px]  bg-[#3ecf4c] hover:bg-[#36b343] border-none"
+
+// share -> className="block outline-none cursor-pointer rounded-[10px] text-[1em] group w-full h-[36px] mb-0 p-[7px_22px] border-[1px] border-solid border-[#3ecf4c] bg-transparent hover:bg-[#e9fde2]"
 
 PurchasingPanel.propTypes = {
 	course: PropTypes.object.isRequired
