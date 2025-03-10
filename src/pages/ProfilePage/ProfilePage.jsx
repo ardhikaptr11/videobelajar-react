@@ -74,6 +74,10 @@ const ProfilePage = () => {
 		}));
 	};
 
+	const isErrorOccurred = Object.values(isError).some((error) => error !== "");
+	const isInEditState = Object.values(isEdit).some((edit) => edit === true);
+	const hasNoChange = Object.keys(inputValues).every((key) => inputValues[key] === userData[key]);
+
 	const doDelete = async () => {
 		return MySwal.fire({
 			title: "Apakah kamu yakin?",
@@ -109,7 +113,7 @@ const ProfilePage = () => {
 		try {
 			await doDelete();
 			await deleteUser(userData.email);
-			navigate("/login");
+			navigate("/", { replace: true });
 		} catch (error) {
 			if (error === "Cancelled") {
 				console.error("Delete cancelled");
@@ -125,39 +129,21 @@ const ProfilePage = () => {
 			phone: false
 		});
 
-		if (isError.fullName || isError.email || isError.phone) {
-			MySwal.fire({
-				icon: "error",
-				title: "Peringatan!",
-				text: "Mohon isi data dengan benar."
-			});
-		} else if (
-			inputValues.fullName === userData.fullName &&
-			inputValues.email === userData.email &&
-			inputValues.phone === userData.phone
-		) {
-			MySwal.fire({
-				icon: "info",
-				title: "Tidak ada perubahan",
-				text: "Kami tidak mendeteksi adanya perubahan data."
-			});
-		} else {
-			MySwal.fire({
-				title: "Sukses!",
-				text: "Data berhasil diperbarui.",
-				icon: "success"
-			});
-			updateProfile(currentUser, inputValues);
-		}
+		MySwal.fire({
+			title: "Sukses!",
+			text: "Data berhasil diperbarui.",
+			icon: "success"
+		});
+		updateProfile(currentUser, inputValues);
 	};
 
 	return (
-		<section className="flex flex-col min-[768px]:flex-row min-[768px]:gap-x-15 gap-y-6 min-[768px]:min-h-[300px]">
-			<aside className="flex justify-center min-[768px]:block min-[768px]:w-fit">
+		<section className="flex flex-col min-[992px]:flex-row min-[992px]:gap-x-15 gap-y-6 min-[992px]:min-h-[300px]">
+			<aside className="flex justify-center min-[992px]:block min-[992px]:w-fit">
 				<img
 					src={userAvatar}
 					alt="User Avatar"
-					className="rounded-full min-[768px]:rounded-none max-[768px]:size-[200px]"
+					className="rounded-full min-[992px]:rounded-none max-[768px]:size-[200px]"
 				/>
 			</aside>
 			<article className="w-full flex flex-col">
@@ -166,7 +152,7 @@ const ProfilePage = () => {
 						key !== "gender" && (
 							<div
 								key={key}
-								className={`grid grid-cols-[4fr_auto] min-[768px]:grid-cols-[150px_4fr_auto] min-[768px]:grid-rows-1 items-center first:mt-0 mt-6 ${
+								className={`grid grid-cols-[4fr_auto] min-[992px]:grid-cols-[150px_4fr_auto] min-[992px]:grid-rows-1 items-center first:mt-0 mt-6 ${
 									isError[key] ? "grid-rows-3" : "grid-rows-2"
 								} `}>
 								<h3 className="text-[1.125em] font-bold w-fit row-start-1 col-start-1">
@@ -183,55 +169,60 @@ const ProfilePage = () => {
 											: isEdit[key] || isError[key]
 											? "border-[#ff0000] focus:outline-[#ff0000]"
 											: "border-[#e1dfdf]"
-									} rounded-[4px] mr-2.5 row-start-2 col-start-1 min-[768px]:row-start-1 min-[768px]:col-start-2`}
+									} rounded-[4px] mr-2.5 row-start-2 col-start-1 min-[992px]:row-start-1 min-[992px]:col-start-2`}
 									onChange={handleInputChange}
 									disabled={!isEdit[key]}
 								/>
 								<IonIcon
 									icon={createOutline}
-									className={`${key} text-[1.125em] text-[#222325] cursor-pointer row-start-2 col-start-2 min-[768px]:row-start-1 min-[768px]:col-start-3`}
+									className={`${key} text-[1.125em] text-[#222325] cursor-pointer row-start-2 col-start-2 min-[992px]:row-start-1 min-[992px]:col-start-3`}
 									onClick={(e) => handleEdit(e)}
 								/>
 								{isError[key] && (
-									<span className="text-[0.875em] text-[#ff0000] row-start-3 col-start-1 min-[768px]:col-start-2 min-[768px]:row-start-2">
+									<span className="text-[0.875em] text-[#ff0000] row-start-3 col-start-1 min-[992px]:col-start-2 min-[992px]:row-start-2">
 										{isError[key]}
 									</span>
 								)}
 							</div>
 						)
 				)}
-				<div className="grid grid-cols-[4fr_auto] min-[768px]:grid-cols-[150px_4fr_auto] mt-6">
+				<div className="grid grid-cols-[4fr_auto] min-[992px]:grid-cols-[150px_4fr_auto] mt-6">
 					<h3 className="text-[1.125em] font-bold w-fit">Jenis Kelamin</h3>
 					<Input
 						type="text"
 						name="gender"
 						value={userData.gender === "men" ? "Laki-laki" : "Perempuan"}
 						id="gender"
-						className="text-base p-1 h-[30px] border border-solid border-[#e1dfdf] rounded-[4px] mr-7 row-start-2 col-start-1 min-[768px]:row-start-1 min-[768px]:col-start-2"
+						className="text-base p-1 h-[30px] border border-solid border-[#e1dfdf] rounded-[4px] mr-7 row-start-2 col-start-1 min-[992px]:row-start-1 min-[992px]:col-start-2"
 						disabled
 					/>
 				</div>
-				<div className="flex justify-center gap-x-6 mt-6 h-[36px] min-[768px]:justify-start">
-					<Button type="submit" id="delete" text="Hapus Akun" onClick={handleDelete} />
-					<Button type="submit" id="edit" text="Perbarui" onClick={(e) => handleUpdate(e)} />
+				<div className="flex justify-center gap-x-6 mt-6 h-[36px] min-[992px]:justify-start">
+					<Button
+						type="submit"
+						id="delete"
+						text="Hapus Akun"
+						style="w-fit h-[36px] mb-0 p-[7px_22px] bg-[#ff6347] hover:bg-[#ff0000] border-none"
+						textStyle="font-bold font-button leading-none text-white"
+						onClick={handleDelete}
+					/>
+					<Button
+						type="submit"
+						id="edit"
+						text="Perbarui"
+						style={`w-fit h-[36px] mb-0 p-[7px_22px]  border-none ${
+							isErrorOccurred || !isInEditState || hasNoChange
+								? "bg-[#e9fde2] pointer-events-none"
+								: "bg-[#3ecf4c] pointer-events-auto hover:bg-[#36b343]"
+						}`}
+						textStyle={`font-bold leading-none ${
+							isErrorOccurred || !isInEditState || hasNoChange ? "text-[#bebebe]" : "text-white"
+						}`}
+						onClick={(e) => handleUpdate(e)}
+					/>
 				</div>
 			</article>
 		</section>
 	);
 };
 export default ProfilePage;
-
-{
-	/* <IonIcon
-							icon={createOutline}
-							className="text-[1.125em] text-[#222325] cursor-pointer"
-							onClick={handleEdit}
-						/> */
-}
-{
-	/* {isError[key] && (
-							<span className="text-[0.75em] text-[#ff0000] row-start-2 col-start-2">
-								{isError[key]}
-							</span>
-						)} */
-}

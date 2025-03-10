@@ -99,14 +99,34 @@ const LoginForm = () => {
 					<a href="/recovery">Lupa Password?</a>
 				</div>
 				<div className="flex flex-col">
-					<Button type="submit" id="login" text="Masuk" />
-					<Button type="button" id="signup" text="Daftar" onClick={handleClicked} />
+					<Button
+						type="submit"
+						id="login"
+						text="Masuk"
+						style="w-full h-[36px] mb-4 p-[7px_22px] bg-[#3ecf4c] hover:bg-[#36b343] border-none"
+						textStyle="font-bold font-button leading-none text-white"
+					/>
+					<Button
+						type="button"
+						id="signup"
+						text="Daftar"
+						style="w-full h-[36px] mb-4 p-[7px_22px] bg-[#e9fde2] border-none"
+						textStyle="font-bold font-button leading-none text-[#3ecf4c]"
+						onClick={handleClicked}
+					/>
 					<div className="flex justify-center items-center text-center relative mb-6">
 						<span className="top-[60%] absolute w-full border-t-[1px] border-t-[#708fac]"></span>
 						<span className="w-[50px] bg-white text-[#8f8d8d] z-1">atau</span>
 						<span className="top-[60%] absolute w-full border-t-[1px] border-t-[#708fac]"></span>
 					</div>
-					<Button type="button" id="sso" text="Masuk dengan Google" icon={googleIcon} />
+					<Button
+						type="button"
+						id="sso"
+						text="Masuk dengan Google"
+						icon={googleIcon}
+						style="w-full border-none outline-none cursor-pointer rounded-[10px] text-[1em] flex justify-center items-center bg-transparent"
+						textStyle="ml-2 text-[#4a505c] font-bold font-button"
+					/>
 				</div>
 			</form>
 			<ToastContainer />
