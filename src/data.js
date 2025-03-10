@@ -63,9 +63,9 @@ const courses = [
 					givenRating: 4.3
 				}
 			],
-			courseDetails: {
-				totalDocument: 7,
-				totalVideo: 42,
+			features: {
+				totalDocuments: 7,
+				totalVideos: 42,
 				hasCertificate: true,
 				modules: [
 					{
@@ -191,9 +191,9 @@ const courses = [
 					givenRating: 4.3
 				}
 			],
-			courseDetails: {
-				totalDocument: 7,
-				totalVideo: 42,
+			features: {
+				totalDocuments: 7,
+				totalVideos: 42,
 				hasCertificate: true,
 				modules: [
 					{
@@ -268,9 +268,9 @@ const courses = [
 					givenRating: 4.3
 				}
 			],
-			courseDetails: {
-				totalDocument: 7,
-				totalVideo: 42,
+			features: {
+				totalDocuments: 7,
+				totalVideos: 42,
 				hasCertificate: true,
 				modules: [
 					{
@@ -345,9 +345,9 @@ const courses = [
 					givenRating: 4.3
 				}
 			],
-			courseDetails: {
-				totalDocument: 7,
-				totalVideo: 42,
+			features: {
+				totalDocuments: 7,
+				totalVideos: 42,
 				hasCertificate: true,
 				modules: [
 					{
@@ -422,9 +422,9 @@ const courses = [
 					givenRating: 4.3
 				}
 			],
-			courseDetails: {
-				totalDocument: 7,
-				totalVideo: 42,
+			features: {
+				totalDocuments: 7,
+				totalVideos: 42,
 				hasCertificate: true,
 				modules: [
 					{
@@ -499,9 +499,9 @@ const courses = [
 					givenRating: 4.3
 				}
 			],
-			courseDetails: {
-				totalDocument: 7,
-				totalVideo: 42,
+			features: {
+				totalDocuments: 7,
+				totalVideos: 42,
 				hasCertificate: true,
 				modules: [
 					{
@@ -576,9 +576,9 @@ const courses = [
 					givenRating: 4.3
 				}
 			],
-			courseDetails: {
-				totalDocument: 7,
-				totalVideo: 42,
+			features: {
+				totalDocuments: 7,
+				totalVideos: 42,
 				hasCertificate: true,
 				modules: [
 					{
@@ -653,9 +653,9 @@ const courses = [
 					givenRating: 4.3
 				}
 			],
-			courseDetails: {
-				totalDocument: 7,
-				totalVideo: 42,
+			features: {
+				totalDocuments: 7,
+				totalVideos: 42,
 				hasCertificate: true,
 				modules: [
 					{
@@ -730,9 +730,9 @@ const courses = [
 					givenRating: 4.3
 				}
 			],
-			courseDetails: {
-				totalDocument: 7,
-				totalVideo: 42,
+			features: {
+				totalDocuments: 7,
+				totalVideos: 42,
 				hasCertificate: true,
 				modules: [
 					{
