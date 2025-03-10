@@ -45,7 +45,7 @@ const FilterPanel = () => {
 	const [isReset, setIsReset] = useState(false);
 
 	return (
-		<aside className="flex flex-col gap-y-4 p-5 w-full h-fit border border-solid border-[#3a35411f] rounded-[10px] min-[992x]:max-w-[365px]">
+		<aside className="flex flex-col gap-y-4 p-5 w-full h-fit border border-solid border-[#3a35411f] rounded-[10px] min-[992px]:max-w-[365px]">
 			<div className="flex justify-between items-center">
 				<p className="font-semibold text-[18px]/[21.6px] font-poppins text-[#333333ad]">Filter</p>
 				<p

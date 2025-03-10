@@ -9,7 +9,6 @@ const CardBody = ({ coverImage, courseInfo }) => {
 			<img
 				src={coverImage}
 				alt="Course cover image"
-				// size-[82px] min-[768px]:w-full min-[768px]:h-[230px] min-[768px]:mb-4 rounded-[10px] shrink-0
 				className={`size-[82px] rounded-[10px] shrink-0 ${
 					location === "/"
 						? "min-[768px]:w-full min-[768px]:h-[230px] min-[768px]:mb-4"
