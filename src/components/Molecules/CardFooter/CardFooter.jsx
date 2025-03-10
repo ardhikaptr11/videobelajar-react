@@ -1,7 +1,9 @@
 import CourseRating from "@components/Atoms/CourseRating/CourseRating";
 import PropTypes from "prop-types";
 
-const CardFooter = ({ rating, totalReviews, price, isDiscount, discountedPrice, ...props }) => {
+const CardFooter = ({ courseInfo, ...props }) => {
+	const { rating, totalReviews, price, isDiscount, discountedPrice } = courseInfo;
+
 	return (
 		<div className="flex justify-between items-center">
 			<CourseRating rating={rating} totalReviews={totalReviews} />
@@ -27,11 +29,7 @@ const CardFooter = ({ rating, totalReviews, price, isDiscount, discountedPrice, 
 };
 
 CardFooter.propTypes = {
-	rating: PropTypes.number.isRequired,
-	totalReviews: PropTypes.number.isRequired,
-	price: PropTypes.number.isRequired,
-	isDiscount: PropTypes.bool,
-	discountedPrice: PropTypes.number,
+	courseInfo: PropTypes.object.isRequired,
 	location: PropTypes.string.isRequired
 };
 
