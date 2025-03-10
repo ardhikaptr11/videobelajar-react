@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import CourseInfo from "../CourseInfo/CourseInfo";
 
-const CardBody = ({ coverImage, courseInfo }) => {
+const CardBody = ({ coverImage, courseInfo, instructors }) => {
 	const location = window.location.pathname;
 
 	return (
@@ -15,14 +15,15 @@ const CardBody = ({ coverImage, courseInfo }) => {
 						: "min-[1400px]:mb-4 min-[1400px]:w-full min-[1400px]:h-[230px]"
 				}`}
 			/>
-			<CourseInfo {...courseInfo} />
+			<CourseInfo {...courseInfo} instructors={instructors}/>
 		</div>
 	);
 };
 
 CardBody.propTypes = {
 	coverImage: PropTypes.string.isRequired,
-	courseInfo: PropTypes.object.isRequired
+	courseInfo: PropTypes.object.isRequired,
+	instructors: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default CardBody;
