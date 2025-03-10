@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import FilteringPanel from "@components/Molecules/FilteringPanel/FilteringPanel";
 import Toolbar from "@components/Molecules/Toolbar/Toolbar";
@@ -6,26 +6,42 @@ import SortingTools from "@components/Atoms/SortingTools/SortingTools";
 import SearchingTools from "@components/Atoms/SearchingTools/SearchingTools";
 import Course from "@components/Organisms/Course/Course";
 import CourseList from "@components/Molecules/CourseList/CourseList";
-import courses from "../../data";
+import useFetchCourses from "../../customHooks/useFetchCourses";
+
+import { CustomSpinner } from "@components/CustomComponent/CustomSpinner";
 
 const CategoryPage = () => {
+	const { loading, courses } = useFetchCourses();
+
+	useEffect(() => {
+		setFilteredItems(courses);
+	}, [courses]);
+
+	useEffect(() => {
+		setSortedItems(courses);
+	}, [courses]);
+
 	// For searching
 	const [searchItem, setSearchItem] = useState("");
-	const [filteredItems, setFilteredItems] = useState(courses);
+	const [filteredItems, setFilteredItems] = useState([]);
 
 	// For sorting
 	const setSortMethod = (item, type) => {
 		return item === "price"
 			? type === "highest"
 				? [...courses].filter((course) =>
-						course.isDiscount ? course.discountedPrice > 599 : course.price > 599
+						course.courseInfo.isDiscount
+							? course.courseInfo.discountedPrice > 599
+							: course.courseInfo.price > 599
 				  )
 				: [...courses].filter((course) =>
-						course.isDiscount ? course.discountedPrice < 199 : course.price < 199
+						course.courseInfo.isDiscount
+							? course.courseInfo.discountedPrice < 199
+							: course.courseInfo.price < 199
 				  )
 			: type === "highest"
-			? [...courses].filter((course) => course.rating >= 3.5)
-			: [...courses].filter((course) => course.rating < 3.0);
+			? [...courses].filter((course) => course.courseInfo.rating >= 3.5)
+			: [...courses].filter((course) => course.courseInfo.rating < 3.0);
 	};
 
 	const lowestPrice = setSortMethod("price", "lowest");
@@ -35,7 +51,7 @@ const CategoryPage = () => {
 	const ascendingOrder = [...courses].sort((a, b) => a.courseInfo.title.localeCompare(b.courseInfo.title));
 	const descendingOrder = [...courses].sort((a, b) => b.courseInfo.title.localeCompare(a.courseInfo.title));
 
-	const [sortedItems, setSortedItems] = useState(courses);
+	const [sortedItems, setSortedItems] = useState([]);
 
 	const handleSortedItems = (id) => {
 		switch (id) {
@@ -94,7 +110,7 @@ const CategoryPage = () => {
 						<SortingTools condition={searchItem} onClick={(e) => handleClick(e)} />
 						<SearchingTools value={searchItem} onChange={(e) => handleInputChange(e)} />
 					</Toolbar>
-					<CourseList courses={searchItem ? filteredItems : sortedItems} />
+					{loading ? <CustomSpinner /> : <CourseList courses={searchItem ? filteredItems : sortedItems} />}
 				</Course>
 			</section>
 		</>

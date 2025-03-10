@@ -7,9 +7,15 @@ import CourseList from "@components/Molecules/CourseList/CourseList";
 import Newsletter from "@components/Molecules/NewsLetter/Newsletter";
 import Course from "@components/Organisms/Course/Course";
 import TabsWithIndicator from "@components/Molecules/TabsWithIndicator/TabsWithIndicator";
-import courses from "../../data";
+
+import { CustomSpinner } from "@components/CustomComponent/CustomSpinner";
+import useFetchCourses from "../../customHooks/useFetchCourses";
+
 
 const LandingPage = () => {
+	const { courses, loading } = useFetchCourses();
+
+
 	return (
 		<Suspense fallback={<Spin />}>
 			<Heroku
@@ -24,7 +30,7 @@ const LandingPage = () => {
 					childText="Jelajahi Dunia Pengetahuan Melalui Pilihan Kami!"
 				/>
 				<TabsWithIndicator categories={["Semua Kelas", "Pemasaran", "Desain", "Pengembangan Diri", "Bisnis"]} />
-				<CourseList courses={courses} />
+				{loading ? <CustomSpinner /> : <CourseList courses={courses} />}
 			</Course>
 			<Newsletter
 				headingText="Mau Belajar Lebih Banyak?"
