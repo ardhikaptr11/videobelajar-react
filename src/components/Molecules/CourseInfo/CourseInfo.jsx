@@ -22,7 +22,7 @@ const CourseInfo = ({ title, description, instructors }) => {
 				} text-ellipsis`}>
 				{description}
 			</p>
-			<Instructor {...instructors} />
+			<Instructor instructors={instructors} />
 		</div>
 	);
 };
