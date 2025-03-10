@@ -29,13 +29,20 @@ const ActionButtonGroup = ({ forComponent }) => {
 					? "justify-between items-center gap-1.5 max-[768px]:hidden"
 					: "flex-col gap-2 p-3"
 			}`}>
-			<Button type="button" id="login" text="Login" grouped={true} onClick={(e) => handleClicked(e)} />
+			<Button
+				type="button"
+				id="login"
+				text="Login"
+				style="w-full h-[36px] mb-0 p-[7px_22px]  bg-[#3ecf4c] hover:bg-[#36b343] border-none"
+				textStyle="font-bold font-button leading-none text-white"
+				onClick={(e) => handleClicked(e)}
+			/>
 			<Button
 				type="button"
 				id="signup"
 				text="Sign Up"
-				grouped={true}
-				style="outline"
+				style="w-full h-[36px] mb-0 p-[7px_22px]  bg-[#e9fde2] border-[1px] border-solid border-[#3ecf4c] bg-transparent hover:bg-[#e9fde2]"
+				textStyle="font-bold font-button leading-none text-[#3ecf4c] group-hover:text-[#36b343]"
 				onClick={(e) => handleClicked(e)}
 			/>
 		</div>

@@ -183,7 +183,13 @@ const RecoveryPasswordForm = () => {
 					)}
 				</div>
 				<div className="flex flex-col">
-					<Button type="submit" id="update" text={showInputs ? "Perbarui" : "Lanjutkan"} />
+					<Button
+						type="submit"
+						id="update"
+						text={showInputs ? "Perbarui" : "Lanjutkan"}
+						style="w-full h-[36px] mb-4 p-[7px_22px] bg-[#3ecf4c] hover:bg-[#36b343] border-none"
+						textStyle="font-bold font-button leading-none text-white"
+					/>
 				</div>
 			</form>
 			<ToastContainer />
