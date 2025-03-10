@@ -15,31 +15,34 @@ const PurchasingPanel = ({ course }) => {
 				<h6 className="font-poppins font-semibold text-[1.125em]/[21.6px] text-black tracking-normal">
 					{course.courseInfo.tagline}
 				</h6>
-				<div className={`w-full ${course.isDiscount ? "flex justify-between items-center" : "block"}`}>
+				<div
+					className={`w-full ${
+						course.courseInfo.isDiscount ? "flex justify-between items-center" : "block"
+					}`}>
 					<div className="w-[150px] flex justify-between items-center">
-						{course.isDiscount && (
+						{course.courseInfo.isDiscount && (
 							<h6 className="font-poppins font-semibold text-[1.125em]/[21.6px] text-[#3ecf4c] tracking-normal">
-								Rp {course.discountedPrice}K
+								Rp {course.courseInfo.discountedPrice}K
 							</h6>
 						)}
 						<p
 							className={`${
-								course.isDiscount
+								course.courseInfo.isDiscount
 									? "text-base/[22.4px] font-medium tracking-[0.0125em] line-through"
 									: "font-poppins font-semibold text-[1.125em]/[21.6px] text-[#3ecf4c] tracking-normal"
 							}`}>
-							Rp {course.price}K
+							Rp {course.courseInfo.price}K
 						</p>
 					</div>
-					{course.isDiscount && (
+					{course.courseInfo.isDiscount && (
 						<div className="p-[4px_10px] bg-[#FFBD3A] rounded-[10px] w-[85px] h-full">
 							<p className="text-white text-center font-normal text-[0.75em]/[16.8px] tracking-[0.0125em]">
-								Diskon {course.totalDiscount}%
+								Diskon {course.courseInfo.totalDiscount}%
 							</p>
 						</div>
 					)}
 				</div>
-				{course.isDiscount && (
+				{course.courseInfo.isDiscount && (
 					<p className="text-[0.875em]/[19.6px] tracking-[0.0125em] text-[#0980E2] font-medium">
 						Penawaran spesial tersisa 2 hari lagi!
 					</p>
