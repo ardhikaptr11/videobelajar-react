@@ -9,14 +9,20 @@ const Heroku = ({ position = "front-page", ...props }) => {
 		section.scrollIntoView({ behavior: "smooth" });
 	};
 
-	// TODO
 	return position === "front-page" ? (
 		<section className="h-[400px] flex flex-col justify-center items-center text-[#ffffff] text-center py-[37px] px-5 rounded-[10px] bg-center bg-cover bg-no-repeat bg-(image:--heroku-bg) min-[1200px]:p-[60px_140px]">
 			<h3 className="text-2xl/[26.4px] font-bold mb-3 min-[992px]:text-[1.75em] min-[1200px]:text-5xl/[52.8px]">
 				{props.tagline}
 			</h3>
 			<p className="text-[0.875em]/[19.6px] font-normal mb-6 min-[992px]:text-base">{props.description}</p>
-			<Button type="button" id="explore" text="Temukan Video Course untuk Dipelajari!" onClick={handleClicked} />
+			<Button
+				type="button"
+				id="explore"
+				text="Temukan Video Course untuk Dipelajari!"
+				style="w-full h-[42px] max-w-[369px] p-[10px_5px] min-[576px]:p-[10px_8px] bg-[#3ecf4c] hover:bg-[#36b343] border-none"
+				textStyle="font-normal font-button text-[0.875em] leading-none text-white max-[345px]:text-[0.75em]"
+				onClick={handleClicked}
+			/>
 		</section>
 	) : (
 		<section

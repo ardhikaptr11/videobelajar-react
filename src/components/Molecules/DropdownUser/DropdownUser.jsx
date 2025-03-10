@@ -8,6 +8,8 @@ const goTo = (page) => {
 	switch (page) {
 		case "Profil Saya":
 			return "/profile";
+		case "Kategori":
+			return "/categories";
 		case "Kelas Saya":
 			return "/my-class";
 		case "Pesanan Saya":
@@ -26,7 +28,11 @@ const DropdownUser = () => {
 
 	const navigate = useNavigate();
 	const menuList =
-		location !== "/profile" ? ["Profil Saya", "Kelas Saya", "Pesanan Saya"] : ["Kelas Saya", "Pesanan Saya"];
+		location !== "/profile"
+			? window.innerWidth <= 768
+				? ["Profil Saya", "Kategori", "Kelas Saya", "Pesanan Saya"]
+				: ["Profil Saya", "Kelas Saya", "Pesanan Saya"]
+			: ["Kategori", "Kelas Saya", "Pesanan Saya"];
 
 	const handleClick = (e) => {
 		const page = e.target.innerText;
