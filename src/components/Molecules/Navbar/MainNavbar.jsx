@@ -3,7 +3,6 @@ import { useNavigate } from "react-router";
 
 import brandLogo from "@assets/videobelajar-logo.png";
 import hamburgerIcon from "@assets/hamburger-icon.png";
-// import userAvatar from "@assets/user-avatar.png";
 import ActionButtonGroup from "@components/Molecules/ActionButtonGroup/ActionButtonGroup";
 import storeUser from "@store/storeUser";
 import storeDropdown from "@store/storeDropdown";

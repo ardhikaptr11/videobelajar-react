@@ -66,10 +66,6 @@ const PurchasingPanel = ({ course }) => {
 	);
 };
 
-// purchase -> className="block outline-none cursor-pointer rounded-[10px] text-[1em] group w-full h-[36px] mb-0 p-[7px_22px]  bg-[#3ecf4c] hover:bg-[#36b343] border-none"
-
-// share -> className="block outline-none cursor-pointer rounded-[10px] text-[1em] group w-full h-[36px] mb-0 p-[7px_22px] border-[1px] border-solid border-[#3ecf4c] bg-transparent hover:bg-[#e9fde2]"
-
 PurchasingPanel.propTypes = {
 	course: PropTypes.object.isRequired
 };

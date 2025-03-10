@@ -9,7 +9,6 @@ const Heroku = ({ position = "front-page", ...props }) => {
 		section.scrollIntoView({ behavior: "smooth" });
 	};
 
-	// TODO
 	return position === "front-page" ? (
 		<section className="h-[400px] flex flex-col justify-center items-center text-[#ffffff] text-center py-[37px] px-5 rounded-[10px] bg-center bg-cover bg-no-repeat bg-(image:--heroku-bg) min-[1200px]:p-[60px_140px]">
 			<h3 className="text-2xl/[26.4px] font-bold mb-3 min-[992px]:text-[1.75em] min-[1200px]:text-5xl/[52.8px]">
