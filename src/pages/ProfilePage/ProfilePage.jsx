@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 import { IonIcon } from "@ionic/react";
 import { createOutline } from "ionicons/icons";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 import Input from "@components/Atoms/Input/Input";
 import Button from "@components/Atoms/Button/Button";
@@ -111,9 +111,15 @@ const ProfilePage = () => {
 
 	const handleDelete = async () => {
 		try {
+			sessionStorage.setItem("isDeleting", "true");
 			await doDelete();
-			await deleteUser(userData.email);
-			navigate("/", { replace: true });
+			sessionStorage.removeItem("origin");
+			deleteUser(userData.email);
+
+			setTimeout(() => {
+				navigate("/signup", { replace: true });
+				sessionStorage.removeItem("isDeleting");
+			}, 3000);
 		} catch (error) {
 			if (error === "Cancelled") {
 				console.error("Delete cancelled");
