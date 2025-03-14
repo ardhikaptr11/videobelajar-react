@@ -5,7 +5,9 @@ import Button from "@components/Atoms/Button/Button";
 import CourseFeatures from "@components/Molecules/CourseFeatures/CourseFeatures";
 
 const PurchasingPanel = ({ course }) => {
-	const isLoggedIn = storeUser((state) => state.isLoggedIn);
+	const currentUser = storeUser((state) => state.currentUser);
+	const getLoginStatus = storeUser((state) => state.getLoginStatus);
+	const isLoggedIn = getLoginStatus(currentUser);
 
 	return (
 		<aside className="w-full h-fit flex flex-col gap-y-4 p-5 border border-solid border-[#3A35411F] rounded-[10px] order-1 min-[992px]:max-w-[320px] min-[992px]:p-6 min-[992px]:order-2">
