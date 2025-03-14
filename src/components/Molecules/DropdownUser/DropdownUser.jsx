@@ -41,6 +41,14 @@ const DropdownUser = () => {
 		hideDropdown();
 	};
 
+	const handleLogout = () => {
+		// sessionStorage.setItem("isDeleting", "false");
+		sessionStorage.clear();
+		logout();
+		hideDropdown();
+		navigate("/");
+	};
+
 	return (
 		<div
 			className={`hidden  h-fit fixed bg-white z-999 max-[768px]:block ${
@@ -58,11 +66,7 @@ const DropdownUser = () => {
 				))}
 				<li
 					className="flex items-center gap-x-[5px] px-3 py-3 border-b border-[#3a35411f] cursor-pointer"
-					onClick={() => {
-						logout();
-						hideDropdown();
-						navigate("/");
-					}}>
+					onClick={handleLogout}>
 					<a className="text-[#ff4b4b] font-bold">Keluar</a>
 					<img src={exitIcon} alt="Exit" className="block" />
 				</li>

@@ -3,7 +3,7 @@ import { Bounce, toast } from "react-toastify";
 const showToast = (type, message, settings = null) => {
 	const defaultOptions = {
 		position: "top-center",
-		autoClose: 5000,
+		autoClose: 3000,
 		hideProgressBar: false,
 		closeOnClick: false,
 		pauseOnHover: false,
