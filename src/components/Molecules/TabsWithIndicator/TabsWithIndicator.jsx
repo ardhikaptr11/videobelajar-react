@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { StyledTab, StyledTabs } from "@components/Molecules/StyledComponent/StyledComponent";
+import { StyledTab, StyledTabs } from "@components/CustomComponent/StyledComponent";
 import Box from "@mui/material/Box";
 
 const TabsWithIndicator = ({ categories }) => {

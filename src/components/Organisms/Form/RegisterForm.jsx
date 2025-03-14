@@ -20,6 +20,7 @@ const RegisterSchema = z.object({
 });
 
 const RegisterForm = () => {
+	const deletedUsers = storeUser((state) => state.deletedUsers);
 	const register = storeUser((state) => state.register);
 	const navigate = useNavigate();
 	const setLocation = storeNavigation((state) => state.setLocation);
@@ -33,7 +34,8 @@ const RegisterForm = () => {
 		email: "",
 		gender: "",
 		phone: "",
-		password: ""
+		password: "",
+		confirmPassword: ""
 	});
 
 	useEffect(() => {
@@ -42,9 +44,9 @@ const RegisterForm = () => {
 		const totalEmpty = errorMessages.length;
 
 		if (isAllEmpty) {
-			showToast("error", "Form tidak boleh kosong");
+			showToast("error", "Form tidak boleh kosong.");
 		} else if (totalEmpty > 1) {
-			showToast("error", "Semua field harus diisi");
+			showToast("error", "Mohon isi semua field.");
 		} else {
 			const emptyField = Object.entries(errors)
 				.filter(([, value]) => value !== "")
@@ -87,11 +89,6 @@ const RegisterForm = () => {
 		const confirmPassword = e.target.confirmPassword.value;
 		const password = e.target.password.value;
 
-		if (password !== confirmPassword) {
-			showToast("error", "Password tidak sama");
-			return;
-		}
-
 		const result = RegisterSchema.safeParse(userData);
 
 		if (!result.success) {
@@ -112,20 +109,31 @@ const RegisterForm = () => {
 					updatedErrors.email = "Email tidak boleh kosong";
 				} else if (phone === "") {
 					updatedErrors.phone = "Nomor HP tidak boleh kosong";
+				} else if (password === "" && confirmPassword === "") {
+					updatedErrors.password = "Password tidak boleh kosong";
+					updatedErrors.confirmPassword = "Password tidak boleh kosong";
+				} else if (password === "") {
+					updatedErrors.password = "Password tidak boleh kosong";
 				}
 
 				return updatedErrors;
 			});
 		} else {
+			if (password !== confirmPassword) {
+				showToast("error", "Password tidak sama.");
+				return;
+			}
+
+			const emailAlreadyUsed = deletedUsers.includes(email);
+			if (emailAlreadyUsed) {
+				showToast("error", "Email sudah pernah digunakan.");
+				return;
+			}
+
 			const success = register(userData);
 
 			if (success) {
-				showToast("success", "Registrasi berhasil!");
-
-				setTimeout(() => {
-					navigate("/login");
-				}, 6000);
-
+				showToast("success", "Registrasi berhasil!", { onClose: () => navigate("/login") });
 				resetForm();
 			}
 		}
