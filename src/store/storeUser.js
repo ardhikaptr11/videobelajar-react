@@ -6,51 +6,124 @@ import sha256 from "crypto-js/sha256";
 const storeUser = create(
 	persist(
 		(set, get) => ({
-			isLoggedIn: false,
+			users: {},
+			deletedUsers: [],
 			currentUser: null,
-			users: [],
-			register: (newUser) => {
-				const foundUser = get().users.find((user) => user.email === newUser.email);
-				const trimmedEmail = newUser.email.trim();
-				const hashedEmail = sha256(trimmedEmail).toString(CryptoJS.enc.Hex);
-				if (!foundUser) {
-					set((state) => ({
-						users: [...state.users, { ...newUser, phone: `0${newUser.phone}`, hashedEmail: hashedEmail }]
-					}));
-					return true;
-				} else {
-					return false;
-				}
-			},
-			login: (email, password) => {
-				const existingUser = get().users.find((user) => user.email === email && user.password === password);
-				existingUser && set(() => ({ isLoggedIn: true, currentUser: existingUser.email }));
-			},
-			updateUserPassword: (email, newPassword) => {
-				const foundUser = get().users.find((user) => user.email === email);
-				foundUser &&
-					set((state) => ({
-						users: state.users.map((user) => ({ ...user, password: newPassword }))
-					}));
-			},
 			findUser: (email) => {
-				const foundUser = get().users.find((user) => user.email === email);
+				const trimmedEmail = email.trim();
+				const foundUser = Object.values(get().users).find((user) => user.email === trimmedEmail);
 				return foundUser;
 			},
+			getLoginStatus: (currentUser) => {
+				const foundUser = Object.values(get().users).find((user) => user.email === currentUser);
+				const isLoggedIn = foundUser && foundUser.isLoggedIn;
+				return isLoggedIn;
+			},
+			register: (newUser) => {
+				const trimmedEmail = newUser.email.trim();
+				const hashedEmail = sha256(trimmedEmail).toString(CryptoJS.enc.Hex);
+
+				const existingUser = Object.values(get().users).find((user) => user.email === trimmedEmail);
+
+				if (existingUser) return false;
+
+				let index = 1;
+				while (get().users[`user${index}`]) {
+					index++;
+				}
+
+					set((state) => ({
+					users: {
+						...state.users,
+						[`user${index}`]: {
+							fullName: newUser.fullName,
+							email: trimmedEmail,
+							gender: newUser.gender,
+							phone: `0${newUser.phone}`,
+							hashedEmail: hashedEmail,
+							password: newUser.password,
+							isLoggedIn: false
+						}
+					}
+					}));
+
+					return true;
+			},
+			login: (email, password) => {
+				const trimmedEmail = email.trim();
+				const foundUser = Object.values(get().users).find(
+					(user) => user.email === trimmedEmail && user.password === password
+				);
+
+				if (!foundUser) return;
+
+				const userKey = Object.keys(get().users).find((key) => get().users[key].email === foundUser.email);
+
+				set((state) => ({
+					users: {
+						...state.users,
+						[userKey]: {
+							...foundUser,
+							isLoggedIn: true
+						}
+					},
+					currentUser: foundUser.email
+				}));
+
+				return true;
+			},
 			logout: () => {
-				set(() => ({ isLoggedIn: false, currentUser: null }));
+				const foundUser = get().findUser(get().currentUser);
+
+				if (!foundUser) return;
+
+				const userKey = Object.keys(get().users).find((key) => get().users[key].email === foundUser.email);
+
+				set((state) => ({
+					users: {
+						...state.users,
+						[userKey]: {
+							...foundUser,
+							isLoggedIn: false
+						}
+					},
+					currentUser: null
+				}));
+			},
+			updateUserPassword: (email, newPassword) => {
+				const trimmedEmail = email.trim();
+				const foundUser = get().findUser(trimmedEmail);
+
+				if (!foundUser) return;
+
+				const userKey = Object.keys(get().users).find((key) => get().users[key].email === foundUser.email);
+
+					set((state) => ({
+					users: {
+						...state.users,
+						[userKey]: {
+							...foundUser,
+							password: newPassword
+						}
+					}
+					}));
 			},
 			deleteUser: (email) => {
 				const foundUser = get().findUser(email);
-				foundUser &&
+
+				if (!foundUser) return;
+
+				const userKey = Object.keys(get().users).find((key) => get().users[key].email === foundUser.email);
+
+				delete get().users[userKey];
+				
 					set((state) => ({
-						users: state.users.filter((user) => user.email !== email),
-						isLoggedIn: false,
-						currentUser: null
+					currentUser: null,
+					deletedUsers: [...state.deletedUsers, foundUser.email]
 					}));
 			},
 			getGravatarUrl: (email, size) => {
-				const foundUser = get().users.find((user) => user.email === email);
+				const foundUser = get().findUser(email);
 
 				const hash = foundUser.hashedEmail;
 				const name = foundUser && foundUser.gender === "men" ? "Oliver" : "Eliza";
@@ -64,10 +137,20 @@ const storeUser = create(
 			},
 			updateProfile: (email, updatedUser) => {
 				const foundUser = get().findUser(email);
-				foundUser &&
+
+				if (!foundUser) return;
+
+				const userKey = Object.keys(get().users).find((key) => get().users[key].email === foundUser.email);
+
 					set((state) => ({
 						currentUser: updatedUser.email,
-						users: state.users.map((user) => (user.email === email ? { ...user, ...updatedUser } : user))
+					users: {
+						...state.users,
+						[userKey]: {
+							...foundUser,
+							...updatedUser
+						}
+					}
 					}));
 			}
 		}),

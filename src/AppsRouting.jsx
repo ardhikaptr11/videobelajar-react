@@ -1,5 +1,7 @@
 import { lazy } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router";
+import { BrowserRouter, Routes, Route } from "react-router";
+
+import { PrivateRoute } from "./Routes/PrivateRoute";
 
 import HomePageLayout from "@components/Layouts/HomePageLayout";
 import AuthPageLayout from "@components/Layouts/AuthPageLayout";
@@ -13,11 +15,14 @@ const PasswordRecovery = lazy(() => import("@pages/PasswordRecovery/PasswordReco
 const ProfilePage = lazy(() => import("@pages/ProfilePage/ProfilePage"));
 const NotFound = lazy(() => import("@pages/NotFound/NotFound"));
 
-import storeUser from "./store/storeUser";
-import ProtectedElement from "@components/ProtectedElement/ProtectedElement";
+import storeUser from "@store/storeUser";
 
 const AppsRouting = () => {
-	const isLoggedIn = storeUser((state) => state.isLoggedIn);
+	const currentUser = storeUser((state) => state.currentUser);
+	const getLoginStatus = storeUser((state) => state.getLoginStatus);
+	const isLoggedIn = getLoginStatus(currentUser);
+
+	const origin = sessionStorage.getItem("origin");
 
 	return (
 		<BrowserRouter>
@@ -26,16 +31,16 @@ const AppsRouting = () => {
 					<Route path="/" element={<LandingPage />} />
 					<Route path="/categories" element={<CategoryPage />} />
 					<Route path="/course/:slug" element={<CourseDetailsPage />} />
+					<Route path="*" element={<NotFound />} />
 				</Route>
-				<Route element={isLoggedIn ? <Navigate to="/" /> : <AuthPageLayout />}>
-					<Route path="/login" element={<LoginPage />} />
-					<Route path="/signup" element={<RegisterPage />} />
-					<Route path="/recovery" element={<PasswordRecovery />} />
+				<Route element={<AuthPageLayout />}>
+					<Route path="/login" element={isLoggedIn && origin === "/login" ? <NotFound /> : <LoginPage />} />
+					<Route path="/signup" element={isLoggedIn ? <NotFound /> : <RegisterPage />} />
+					<Route path="/recovery" element={isLoggedIn ? <NotFound /> : <PasswordRecovery />} />
 				</Route>
-				<Route element={<ProtectedElement />}>
+				<Route element={<PrivateRoute />}>
 					<Route path="/profile" element={<ProfilePage />} />
 				</Route>
-				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</BrowserRouter>
 	);

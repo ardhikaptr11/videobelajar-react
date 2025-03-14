@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router";
 import { ToastContainer } from "react-toastify";
 
 import showToast from "../../../customFunction/showToast";
@@ -15,6 +15,8 @@ const LoginForm = () => {
 	const login = storeUser((state) => state.login);
 	const findUser = storeUser((state) => state.findUser);
 	const setLocation = storeNavigation((state) => state.setLocation);
+
+	const [isLoginReady, setIsLoginReady] = useState(null);
 
 	useEffect(() => {
 		setLocation("/login");
@@ -38,39 +40,52 @@ const LoginForm = () => {
 	};
 
 	const resetForm = () => {
-		const form = document.querySelector("form");
-		form.reset();
+		setCredentials({
+			email: "",
+			password: ""
+		});
 	};
 
-	const handleSuccess = (message) => {
-		showToast("success", message, { autoClose: 3000 });
-
-		setTimeout(() => {
-			login(credentials.email, credentials.password);
-		}, 4000);
-
+	const handleSuccess = useCallback(
+		(message) => {
+			showToast("success", message, {
+				onClose: () => navigate("/", { replace: true })
+			});
 		resetForm();
-	};
+		},
+		[navigate]
+	);
 
-	const handleError = (message) => {
+	const handleError = useCallback((message) => {
 		showToast("error", message);
-	};
+	}, []);
+
+	useEffect(() => {
+		if (!isLoginReady) return;
+
+		setIsLoginReady(false);
+
+		const foundUser = findUser(credentials.email);
+
+		if (!foundUser) {
+			handleError("Akun tidak ditemukan!");
+			return;
+		}
+
+		const message = foundUser.password === credentials.password ? "Login Berhasil!" : "Email dan password salah!";
+
+		if (foundUser.password === credentials.password) {
+			!sessionStorage.getItem("origin") && sessionStorage.setItem("origin", "/login");
+			handleSuccess(message);
+		} else {
+			handleError(message);
+		}
+	}, [isLoginReady, findUser, handleSuccess, handleError]);
 
 	const handleLogin = (e) => {
 		e.preventDefault();
-		const foundUser = findUser(credentials.email, credentials.password);
-
-		const message = foundUser
-			? foundUser.password === credentials.password
-				? "Login berhasil!"
-				: "Email atau password salah!"
-			: "Akun tidak ditemukan!";
-
-		foundUser
-			? foundUser.password === credentials.password
-				? handleSuccess(message)
-				: handleError(message)
-			: handleError(message);
+		login(credentials.email, credentials.password);
+		setIsLoginReady(true);
 	};
 
 	return (
@@ -83,6 +98,7 @@ const LoginForm = () => {
 						name="email"
 						id="email"
 						autoComplete="email"
+						value={credentials.email}
 						onChange={(e) => handleChange(e)}
 					/>
 					<InputWithLabel
@@ -92,11 +108,12 @@ const LoginForm = () => {
 						id="password"
 						icon={showPasswordIcon}
 						autoComplete="current-password"
+						value={credentials.password}
 						onChange={(e) => handleChange(e)}
 					/>
 				</div>
 				<div className="flex justify-end mb-5">
-					<a href="/recovery">Lupa Password?</a>
+					<Link to="/recovery">Lupa Password?</Link>
 				</div>
 				<div className="flex flex-col">
 					<Button
