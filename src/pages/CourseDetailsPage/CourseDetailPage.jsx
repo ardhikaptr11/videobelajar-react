@@ -49,7 +49,11 @@ const CourseDetailsPage = () => {
 					</h5>
 					<p>Ekspansi Pengetahuan Anda dengan Rekomendasi Spesial Kami!</p>
 				</div>
+<<<<<<< HEAD
 				<CourseList courses={course.similarCourses} />
+=======
+				<CourseList courses={randomCourses} />
+>>>>>>> upstream/firebase-dev
 			</section>
 		</>
 	);

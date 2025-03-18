@@ -74,7 +74,15 @@ const DropdownUser = () => {
 				))}
 				<li
 					className="flex items-center gap-x-[5px] px-3 py-3 border-b border-[#3a35411f] cursor-pointer"
+<<<<<<< HEAD
 					onClick={handleLogout}>
+=======
+					onClick={() => {
+						logout();
+						hideDropdown();
+						navigate("/");
+					}}>
+>>>>>>> upstream/firebase-dev
 					<a className="text-[#ff4b4b] font-bold">Keluar</a>
 					<img src={exitIcon} alt="Exit" className="block" />
 				</li>
