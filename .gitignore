@@ -28,6 +28,3 @@ dist-ssr
 
 # Environment variables
 .env
-
-# Development directories
-dev-data/*
