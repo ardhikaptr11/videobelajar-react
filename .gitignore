@@ -25,3 +25,6 @@ dist-ssr
 
 # Images 
 *Zone.Identifier
+
+# Environment variables
+.env

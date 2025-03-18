@@ -1,19 +1,14 @@
 import { useNavigate } from "react-router";
-import slugify from "@sindresorhus/slugify";
 
 import CardBody from "../CardBody/CardBody";
 import CardFooter from "../CardFooter/CardFooter";
 import PropTypes from "prop-types";
 
-const generateSlug = (title) => {
-	return slugify(title, { separator: "-", lowercase: true });
-};
-
 const CourseCard = ({ course, ...props }) => {
 	const navigate = useNavigate();
 
 	const handleClick = () => {
-		const slug = generateSlug(course.courseInfo.title);
+		const slug = course.courseInfo.slug
 		navigate(`/course/${slug}`);
 	};
 

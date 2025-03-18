@@ -8,12 +8,13 @@ import storeUser from "@store/storeUser";
 import storeDropdown from "@store/storeDropdown";
 
 const MainNavbar = () => {
-	const isLoggedIn = storeUser((state) => state.isLoggedIn);
 	const navigate = useNavigate();
 	const location = window.location.pathname;
-	const getGravatarUrl = storeUser((state) => state.getGravatarUrl);
+	
 	const currentUser = storeUser((state) => state.currentUser);
-
+	const getGravatarUrl = storeUser((state) => state.getGravatarUrl);
+	
+	const isLoggedIn = !!currentUser;
 	const userAvatar = isLoggedIn ? getGravatarUrl(currentUser, 44) : "";
 
 	const toggleDropdown = storeDropdown((state) => state.toggleDropdown);

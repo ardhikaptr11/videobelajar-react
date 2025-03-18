@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router";
 import { ToastContainer } from "react-toastify";
+import bcrypt from "bcryptjs";
 
 import showToast from "../../../customFunction/showToast";
 import InputWithLabel from "@components/Molecules/InputWithLabel/InputWithLabel";
@@ -10,20 +11,70 @@ import showPasswordIcon from "@assets/eye-off.png";
 import storeUser from "@store/storeUser";
 import storeNavigation from "@store/storeNavigation";
 
+import { fetchUser } from "@api/users/fetchUser";
+
 const LoginForm = () => {
 	const navigate = useNavigate();
-	const login = storeUser((state) => state.login);
-	const findUser = storeUser((state) => state.findUser);
+
 	const setLocation = storeNavigation((state) => state.setLocation);
+
+	const [isLoginReady, setIsLoginReady] = useState(null);
+	const [credentials, setCredentials] = useState({
+		email: "",
+		password: ""
+	});
+	const [foundUser, setFoundUser] = useState(null);
 
 	useEffect(() => {
 		setLocation("/login");
 	}, [setLocation]);
 
-	const [credentials, setCredentials] = useState({
-		email: "",
-		password: ""
-	});
+	const handleSuccess = useCallback(
+		(message) => {
+			showToast("success", message, {
+				onClose: () => {
+					navigate("/", { replace: true });
+					!sessionStorage.getItem("origin") && sessionStorage.setItem("origin", "/login");
+				}
+			});
+			resetForm();
+		},
+		[navigate]
+	);
+
+	const handleError = useCallback((message) => {
+		showToast("error", message);
+	}, []);
+
+	const verifyPassword = useCallback(
+		(password) => {
+			bcrypt.compare(password, foundUser.password, (err, isMatch) => {
+				if (err || !isMatch) {
+					handleError("Email dan password salah!");
+					return;
+				}
+
+				storeUser.setState({
+					currentUser: {
+						id: foundUser.id,
+						fullName: foundUser.fullName,
+						email: foundUser.email,
+						gender: foundUser.gender,
+						phone: foundUser.phone
+					}
+				});
+
+				handleSuccess("Login Berhasil!");
+			});
+		},
+		[foundUser, handleSuccess, handleError, storeUser]
+	);
+
+	useEffect(() => {
+		if (!isLoginReady || !foundUser) return;
+		setIsLoginReady(false);
+		verifyPassword(credentials.password);
+	}, [isLoginReady, foundUser, verifyPassword]);
 
 	const handleClicked = () => {
 		navigate("/signup");
@@ -38,39 +89,24 @@ const LoginForm = () => {
 	};
 
 	const resetForm = () => {
-		const form = document.querySelector("form");
-		form.reset();
+		setCredentials({
+			email: "",
+			password: ""
+		});
 	};
 
-	const handleSuccess = (message) => {
-		showToast("success", message, { autoClose: 3000 });
-
-		setTimeout(() => {
-			login(credentials.email, credentials.password);
-		}, 4000);
-
-		resetForm();
-	};
-
-	const handleError = (message) => {
-		showToast("error", message);
-	};
-
-	const handleLogin = (e) => {
+	const handleLogin = async (e) => {
 		e.preventDefault();
-		const foundUser = findUser(credentials.email, credentials.password);
 
-		const message = foundUser
-			? foundUser.password === credentials.password
-				? "Login berhasil!"
-				: "Email atau password salah!"
-			: "Akun tidak ditemukan!";
+		const user = await fetchUser(credentials.email);
 
-		foundUser
-			? foundUser.password === credentials.password
-				? handleSuccess(message)
-				: handleError(message)
-			: handleError(message);
+		if (!user) {
+			handleError("Akun tidak ditemukan!");
+			return;
+		}
+
+		setFoundUser(user);
+		setIsLoginReady(true);
 	};
 
 	return (
@@ -83,6 +119,7 @@ const LoginForm = () => {
 						name="email"
 						id="email"
 						autoComplete="email"
+						value={credentials.email}
 						onChange={(e) => handleChange(e)}
 					/>
 					<InputWithLabel
@@ -92,11 +129,12 @@ const LoginForm = () => {
 						id="password"
 						icon={showPasswordIcon}
 						autoComplete="current-password"
+						value={credentials.password}
 						onChange={(e) => handleChange(e)}
 					/>
 				</div>
 				<div className="flex justify-end mb-5">
-					<a href="/recovery">Lupa Password?</a>
+					<Link to="/recovery">Lupa Password?</Link>
 				</div>
 				<div className="flex flex-col">
 					<Button

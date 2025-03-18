@@ -1,6 +1,7 @@
+import PropTypes from "prop-types";
 import InstructorInfo from "@components/Atoms/InstructorInfo/InstructorInfo";
 
-const Instructor = ({ ...instructors }) => {
+const Instructor = ({ instructors }) => {
 	const instructor = instructors[0];
 	const { avatar, name, job, company } = instructor;
 
@@ -10,6 +11,10 @@ const Instructor = ({ ...instructors }) => {
 			<InstructorInfo name={name} job={job} company={company} />
 		</div>
 	);
+};
+
+Instructor.propTypes = {
+	instructors: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default Instructor;

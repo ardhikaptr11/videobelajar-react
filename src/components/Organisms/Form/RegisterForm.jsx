@@ -11,6 +11,8 @@ import showPasswordIcon from "@assets/eye-off.png";
 import storeUser from "@store/storeUser";
 import storeNavigation from "@store/storeNavigation";
 
+import { saveUserData } from "@api/users/saveUserData";
+
 const RegisterSchema = z.object({
 	fullName: z.string().min(1, { message: "Nama tidak boleh kosong" }),
 	email: z.string().email({ message: "Email tidak valid" }),
@@ -20,7 +22,8 @@ const RegisterSchema = z.object({
 });
 
 const RegisterForm = () => {
-	const register = storeUser((state) => state.register);
+	const deletedUsers = storeUser((state) => state.deletedUsers);
+	// const register = storeUser((state) => state.register);
 	const navigate = useNavigate();
 	const setLocation = storeNavigation((state) => state.setLocation);
 
@@ -33,7 +36,8 @@ const RegisterForm = () => {
 		email: "",
 		gender: "",
 		phone: "",
-		password: ""
+		password: "",
+		confirmPassword: ""
 	});
 
 	useEffect(() => {
@@ -42,9 +46,9 @@ const RegisterForm = () => {
 		const totalEmpty = errorMessages.length;
 
 		if (isAllEmpty) {
-			showToast("error", "Form tidak boleh kosong");
+			showToast("error", "Form tidak boleh kosong.");
 		} else if (totalEmpty > 1) {
-			showToast("error", "Semua field harus diisi");
+			showToast("error", "Mohon isi semua field.");
 		} else {
 			const emptyField = Object.entries(errors)
 				.filter(([, value]) => value !== "")
@@ -75,22 +79,17 @@ const RegisterForm = () => {
 		const { name, value } = e.target;
 		setUserData((prev) => ({
 			...prev,
-			[name]: value || ""
+			[name]: value
 		}));
 	};
 
-	const handleRegister = (e) => {
+	const handleRegister = async (e) => {
 		e.preventDefault();
 
 		const email = e.target.email.value;
 		const phone = e.target.phone.value;
 		const confirmPassword = e.target.confirmPassword.value;
 		const password = e.target.password.value;
-
-		if (password !== confirmPassword) {
-			showToast("error", "Password tidak sama");
-			return;
-		}
 
 		const result = RegisterSchema.safeParse(userData);
 
@@ -112,21 +111,37 @@ const RegisterForm = () => {
 					updatedErrors.email = "Email tidak boleh kosong";
 				} else if (phone === "") {
 					updatedErrors.phone = "Nomor HP tidak boleh kosong";
+				} else if (password === "" && confirmPassword === "") {
+					updatedErrors.password = "Password tidak boleh kosong";
+					updatedErrors.confirmPassword = "Password tidak boleh kosong";
+				} else if (password === "") {
+					updatedErrors.password = "Password tidak boleh kosong";
 				}
 
 				return updatedErrors;
 			});
 		} else {
-			const success = register(userData);
+			if (password !== confirmPassword) {
+				showToast("error", "Password tidak sama.");
+				return;
+			}
 
-			if (success) {
-				showToast("success", "Registrasi berhasil!");
+			const emailAlreadyUsed = deletedUsers.includes(email);
+			if (emailAlreadyUsed) {
+				showToast("error", "Email sudah pernah digunakan.");
+				return;
+			}
 
-				setTimeout(() => {
-					navigate("/login");
-				}, 6000);
+			try {
+				const success = await saveUserData(userData);
 
-				resetForm();
+				if (success) {
+					showToast("success", "Registrasi berhasil!", { onClose: () => navigate("/login") });
+					resetForm();
+				}
+			} catch (error) {
+				console.error("Kesalahan saat menyimpan data pengguna:", error);
+				showToast("error", "Terjadi kesalahan saat registrasi.");
 			}
 		}
 	};
