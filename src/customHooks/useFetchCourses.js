@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { fetchCourses } from "@api/fetchCourses"
+import { fetchCourses } from "@api/courses/fetchCourses";
 
 const useFetchCourses = () => {
 	const [courses, setCourse] = useState([]);
