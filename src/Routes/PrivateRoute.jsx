@@ -12,11 +12,12 @@ import { CustomSpinner } from "@components/CustomComponent/CustomSpinner";
 export const PrivateRoute = () => {
 	const currentUser = storeUser((state) => state.currentUser);
 	const isDeleting = sessionStorage.getItem("isDeleting");
+	const isLoggingOut = sessionStorage.getItem("isLoggingOut");
 
-	if (isDeleting) {
+	if (isDeleting || isLoggingOut) {
 		return (
 			<Flex align="center" style={{ height: "100vh", justifyContent: "center" }}>
-				<CustomSpinner text="Redirecting" />
+				<CustomSpinner text="Redirecting..." />
 			</Flex>
 		);
 	}
