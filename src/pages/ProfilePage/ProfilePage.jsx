@@ -9,8 +9,8 @@ import Input from "@components/Atoms/Input/Input";
 import Button from "@components/Atoms/Button/Button";
 import storeUser from "@store/storeUser";
 
-import { updateUserData } from "@api/updateUserData";
-import { deleteUserData } from "@api/deleteUserData";
+import { updateUserData } from "@api/users/updateUserData";
+import { deleteUserData } from "@api/users/deleteUserData";
 
 const ProfilePage = () => {
 	const navigate = useNavigate();
