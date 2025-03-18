@@ -9,30 +9,32 @@ import Breadcrumb from "@components/Atoms/Breadcrumb/Breadcrumb";
 import CourseList from "@components/Molecules/CourseList/CourseList";
 
 import { CustomSpinner } from "../../components/CustomComponent/CustomSpinner";
-import { fetchCourseData } from "@api/fetchCourseData"
+import { fetchCourseData } from "@api/courses/fetchCourseData";
 
 const CourseDetailsPage = () => {
 	const { slug } = useParams();
 	const [course, setCourse] = useState(null);
-	const [loading, setLoading] = useState(true)
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		setLoading(true)
+		setLoading(true);
 
 		const fetchData = async () => {
 			try {
 				const courseData = await fetchCourseData(slug);
-				setCourse(courseData)
+				setCourse(courseData);
 			} catch (error) {
 				console.error("❌ Error fetching course:", error);
 			} finally {
-				setLoading(false)
+				setLoading(false);
 			}
-		}
-		fetchData()
+		};
+		fetchData();
 	}, [slug]);
 
-	return loading ? <CustomSpinner /> : (
+	return loading ? (
+		<CustomSpinner text="Loading" />
+	) : (
 		<>
 			<Breadcrumb category={course.courseInfo.category} title={course.courseInfo.title} />
 			<Heroku course={course} position="details-page" />
@@ -50,7 +52,7 @@ const CourseDetailsPage = () => {
 				<CourseList courses={course.similarCourses} />
 			</section>
 		</>
-	)
+	);
 };
 
 export default CourseDetailsPage;
