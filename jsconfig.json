@@ -18,7 +18,10 @@
             ],
             "@api/*": [
                 "services/api/*"
-            ]
+            ],
+            "@client/*": [
+                "services/client/*"
+            ],
         },
         "checkJs": true
     },
