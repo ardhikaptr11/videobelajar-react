@@ -1,13 +1,8 @@
-import axios from "axios";
-
-const BASE_URL =
-	import.meta.env.VITE_DEV === "true"
-		? import.meta.env.VITE_FIREBASE_BASE_URL_DEV
-		: import.meta.env.VITE_FIREBASE_BASE_URL_PROD;
+import { axiosClient } from "@client/axiosClient";
 
 export const fetchCourseFeatures = async (id) => {
 	try {
-		const response = await axios.get(`${BASE_URL}/courses/${id}/features`);
+		const response = await axiosClient.get(`courses/${id}/features`);
 		const features = response.data?.documents;
 
 		const doc = features[0].fields;

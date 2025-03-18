@@ -1,16 +1,20 @@
-import axios from "axios";
+import { axiosClient } from "@client/axiosClient";
 
-import { fetchInstructors } from "@api/fetchInstructors";
-
-const BASE_URL =
-	import.meta.env.VITE_DEV === "true"
-		? import.meta.env.VITE_FIREBASE_BASE_URL_DEV
-		: import.meta.env.VITE_FIREBASE_BASE_URL_PROD;
+import { fetchInstructors } from "@api/courses/fetchInstructors";
 
 export const fetchCourses = async () => {
+	const cachedCourses = sessionStorage.getItem("courses");
+
+	if (cachedCourses) return JSON.parse(cachedCourses);
+
 	try {
-		const response = await axios.get(`${BASE_URL}/courses`);
-		const courses = response.data?.documents;
+		const response = await axiosClient.get("courses");
+
+		if (!response.data) {
+			throw new Error("❌ Error fetching courses.");
+		}
+
+		const courses = response.data.documents;
 
 		const courseList = await Promise.all(
 			courses.map(async (doc) => {
@@ -40,8 +44,10 @@ export const fetchCourses = async () => {
 			})
 		);
 
+		sessionStorage.setItem("courses", JSON.stringify(courseList));
+
 		return courseList;
 	} catch (error) {
-		console.error("❌ Error fetching courses:", error);
+		console.error(error.message);
 	}
 };

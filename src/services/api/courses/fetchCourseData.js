@@ -1,15 +1,10 @@
-import axios from "axios";
+import { axiosClient } from "@client/axiosClient";
 
-import { fetchCourseFeatures } from "@api/fetchCourseFeatures";
-import { fetchCourseModules } from "@api/fetchCourseModules";
-import { fetchInstructors } from "@api/fetchInstructors";
-import { fetchAlumni } from "@api/fetchAlumni";
-import { fetchSimilarCourses } from "@api/fetchSimilarCourses";
-
-const BASE_URL =
-	import.meta.env.VITE_DEV === "true"
-		? import.meta.env.VITE_FIREBASE_BASE_URL_DEV
-		: import.meta.env.VITE_FIREBASE_BASE_URL_PROD;
+import { fetchCourseFeatures } from "@api/courses/fetchCourseFeatures";
+import { fetchCourseModules } from "@api/courses/fetchCourseModules";
+import { fetchInstructors } from "@api/courses/fetchInstructors";
+import { fetchAlumni } from "@api/courses/fetchAlumni";
+import { fetchSimilarCourses } from "@api/courses/fetchSimilarCourses";
 
 export const fetchCourseData = async (slug) => {
 	const requestBody = {
@@ -26,7 +21,7 @@ export const fetchCourseData = async (slug) => {
 	};
 
 	try {
-		const response = await axios.post(`${BASE_URL}:runQuery`, requestBody, {
+		const response = await axiosClient.post(":runQuery", requestBody, {
 			headers: {
 				"Content-Type": "application/json"
 			}

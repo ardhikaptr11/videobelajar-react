@@ -1,4 +1,4 @@
-import { fetchCourses } from "@api/fetchCourses";
+import { fetchCourses } from "@api/courses/fetchCourses";
 
 // Helper function to get random items from an array (Fisher-Yates Shuffle)
 // source: geeksforgeeks.org/shuffle-a-given-array-using-fisher-yates-shuffle-algorithm/
@@ -13,10 +13,10 @@ const getRandomItems = (arr, count) => {
 };
 
 const getUniqueRandomCourses = (courses, slug, count) => {
-    // Get rid a the course with the same slug to be randomized
-    const filteredCourses = courses.filter((course) => course.courseInfo.slug !== slug);
+	// Get rid a the course with the same slug to be randomized
+	const filteredCourses = courses.filter((course) => course.courseInfo.slug !== slug);
 
-    return getRandomItems(filteredCourses, count);
+	return getRandomItems(filteredCourses, count);
 };
 
 export const fetchSimilarCourses = async (slug) => {
@@ -27,5 +27,5 @@ export const fetchSimilarCourses = async (slug) => {
 	// Later work will implement filtering based on course category
 	const randomCourses = getUniqueRandomCourses(courses, slug, 3);
 
-    return randomCourses;
+	return randomCourses;
 };

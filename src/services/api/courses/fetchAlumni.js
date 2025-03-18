@@ -1,16 +1,11 @@
-import axios from "axios";
-
-const BASE_URL =
-	import.meta.env.VITE_DEV === "true"
-		? import.meta.env.VITE_FIREBASE_BASE_URL_DEV
-		: import.meta.env.VITE_FIREBASE_BASE_URL_PROD;
+import { axiosClient } from "@client/axiosClient";
 
 export const fetchAlumni = async (id) => {
 	try {
-		const response = await axios.get(`${BASE_URL}/courses/${id}/alumni`);
+		const response = await axiosClient.get(`courses/${id}/alumni`);
 		const alumni = response.data?.documents;
 
-		const alumnusList = Promise.all(
+		const alumnusList = await Promise.all(
 			alumni.map(async (doc) => {
 				const alumnus = doc.fields;
 

@@ -1,18 +1,13 @@
-import axios from "axios";
+import { axiosClient } from "@client/axiosClient";
 
-import { fetchSubmodules } from "@api/fetchSubmodules";
-
-const BASE_URL =
-	import.meta.env.VITE_DEV === "true"
-		? import.meta.env.VITE_FIREBASE_BASE_URL_DEV
-		: import.meta.env.VITE_FIREBASE_BASE_URL_PROD;
+import { fetchSubmodules } from "@api/courses/fetchSubmodules";
 
 export const fetchCourseModules = async (id) => {
 	try {
-		const response = await axios.get(`${BASE_URL}/courses/${id}/features/${id}-features/modules`);
+		const response = await axiosClient.get(`courses/${id}/features/${id}-features/modules`);
 		const modules = response.data?.documents;
 
-		const moduleList = Promise.all(
+		const moduleList = await Promise.all(
 			modules.map(async (doc) => {
 				const moduleId = doc.name.split("/").pop();
 				const submodules = await fetchSubmodules(id, moduleId);
