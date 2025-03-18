@@ -110,7 +110,11 @@ const CategoryPage = () => {
 						<SortingTools condition={searchItem} onClick={(e) => handleClick(e)} />
 						<SearchingTools value={searchItem} onChange={(e) => handleInputChange(e)} />
 					</Toolbar>
-					{loading ? <CustomSpinner /> : <CourseList courses={searchItem ? filteredItems : sortedItems} />}
+					{loading ? (
+						<CustomSpinner text="Loading" />
+					) : (
+						<CourseList courses={searchItem ? filteredItems : sortedItems} />
+					)}
 				</Course>
 			</section>
 		</>
