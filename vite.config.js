@@ -22,6 +22,7 @@ export default defineConfig({
 			"@pages": path.resolve(__dirname, "./src/pages"),
 			"@store": path.resolve(__dirname, "./src/store"),
 			"@api": path.resolve(__dirname, "./src/services/api"),
+			"@client": path.resolve(__dirname, "./src/services/client")
 		}
 	}
 });
