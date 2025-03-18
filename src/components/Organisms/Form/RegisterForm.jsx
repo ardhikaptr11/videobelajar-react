@@ -11,7 +11,7 @@ import showPasswordIcon from "@assets/eye-off.png";
 import storeUser from "@store/storeUser";
 import storeNavigation from "@store/storeNavigation";
 
-import { saveUserData } from "@api/saveUserData";
+import { saveUserData } from "@api/users/saveUserData";
 
 const RegisterSchema = z.object({
 	fullName: z.string().min(1, { message: "Nama tidak boleh kosong" }),

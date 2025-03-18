@@ -14,7 +14,7 @@ import showPasswordIcon from "@assets/eye-off.png";
 import storeNavigation from "@store/storeNavigation";
 
 import { fetchUser } from "@api/users/fetchUser";
-import { updateUserData } from "@api/updateUserData";
+import { updateUserData } from "@api/users/updateUserData";
 
 const RecoveryPasswordForm = () => {
 	const navigate = useNavigate();
