@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router";
 import { ToastContainer } from "react-toastify";
+import bcrypt from "bcryptjs";
 
 import showToast from "../../../customFunction/showToast";
 import InputWithLabel from "@components/Molecules/InputWithLabel/InputWithLabel";
@@ -10,22 +11,70 @@ import showPasswordIcon from "@assets/eye-off.png";
 import storeUser from "@store/storeUser";
 import storeNavigation from "@store/storeNavigation";
 
+import { fetchUser } from "@api/users/fetchUser";
+
 const LoginForm = () => {
 	const navigate = useNavigate();
-	const login = storeUser((state) => state.login);
-	const findUser = storeUser((state) => state.findUser);
+
 	const setLocation = storeNavigation((state) => state.setLocation);
 
 	const [isLoginReady, setIsLoginReady] = useState(null);
+	const [credentials, setCredentials] = useState({
+		email: "",
+		password: ""
+	});
+	const [foundUser, setFoundUser] = useState(null);
 
 	useEffect(() => {
 		setLocation("/login");
 	}, [setLocation]);
 
-	const [credentials, setCredentials] = useState({
-		email: "",
-		password: ""
-	});
+	const handleSuccess = useCallback(
+		(message) => {
+			showToast("success", message, {
+				onClose: () => {
+					navigate("/", { replace: true });
+					!sessionStorage.getItem("origin") && sessionStorage.setItem("origin", "/login");
+				}
+			});
+			resetForm();
+		},
+		[navigate]
+	);
+
+	const handleError = useCallback((message) => {
+		showToast("error", message);
+	}, []);
+
+	const verifyPassword = useCallback(
+		(password) => {
+			bcrypt.compare(password, foundUser.password, (err, isMatch) => {
+				if (err || !isMatch) {
+					handleError("Email dan password salah!");
+					return;
+				}
+
+				storeUser.setState({
+					currentUser: {
+						id: foundUser.id,
+						fullName: foundUser.fullName,
+						email: foundUser.email,
+						gender: foundUser.gender,
+						phone: foundUser.phone
+					}
+				});
+
+				handleSuccess("Login Berhasil!");
+			});
+		},
+		[foundUser, handleSuccess, handleError, storeUser]
+	);
+
+	useEffect(() => {
+		if (!isLoginReady || !foundUser) return;
+		setIsLoginReady(false);
+		verifyPassword(credentials.password);
+	}, [isLoginReady, foundUser, verifyPassword]);
 
 	const handleClicked = () => {
 		navigate("/signup");
@@ -46,45 +95,17 @@ const LoginForm = () => {
 		});
 	};
 
-	const handleSuccess = useCallback(
-		(message) => {
-			showToast("success", message, {
-				onClose: () => navigate("/", { replace: true })
-			});
-		resetForm();
-		},
-		[navigate]
-	);
+	const handleLogin = async (e) => {
+		e.preventDefault();
 
-	const handleError = useCallback((message) => {
-		showToast("error", message);
-	}, []);
+		const user = await fetchUser(credentials.email);
 
-	useEffect(() => {
-		if (!isLoginReady) return;
-
-		setIsLoginReady(false);
-
-		const foundUser = findUser(credentials.email);
-
-		if (!foundUser) {
+		if (!user) {
 			handleError("Akun tidak ditemukan!");
 			return;
 		}
 
-		const message = foundUser.password === credentials.password ? "Login Berhasil!" : "Email dan password salah!";
-
-		if (foundUser.password === credentials.password) {
-			!sessionStorage.getItem("origin") && sessionStorage.setItem("origin", "/login");
-			handleSuccess(message);
-		} else {
-			handleError(message);
-		}
-	}, [isLoginReady, findUser, handleSuccess, handleError]);
-
-	const handleLogin = (e) => {
-		e.preventDefault();
-		login(credentials.email, credentials.password);
+		setFoundUser(user);
 		setIsLoginReady(true);
 	};
 
