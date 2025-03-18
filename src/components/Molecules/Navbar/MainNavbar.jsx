@@ -11,11 +11,10 @@ const MainNavbar = () => {
 	const navigate = useNavigate();
 	const location = window.location.pathname;
 	
-	const getLoginStatus = storeUser((state) => state.getLoginStatus);
-	const getGravatarUrl = storeUser((state) => state.getGravatarUrl);
 	const currentUser = storeUser((state) => state.currentUser);
+	const getGravatarUrl = storeUser((state) => state.getGravatarUrl);
 	
-	const isLoggedIn = getLoginStatus(currentUser);
+	const isLoggedIn = !!currentUser;
 	const userAvatar = isLoggedIn ? getGravatarUrl(currentUser, 44) : "";
 
 	const toggleDropdown = storeDropdown((state) => state.toggleDropdown);
