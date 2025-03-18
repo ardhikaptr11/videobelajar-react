@@ -15,7 +15,6 @@ const PasswordRecovery = lazy(() => import("@pages/PasswordRecovery/PasswordReco
 const ProfilePage = lazy(() => import("@pages/ProfilePage/ProfilePage"));
 const NotFound = lazy(() => import("@pages/NotFound/NotFound"));
 
-<<<<<<< HEAD
 import storeUser from "@store/storeUser";
 
 const AppsRouting = () => {
