@@ -42,11 +42,19 @@ const DropdownUser = () => {
 	};
 
 	const handleLogout = () => {
-		// sessionStorage.setItem("isDeleting", "false");
-		sessionStorage.clear();
-		logout();
-		hideDropdown();
-		navigate("/");
+		try {
+			sessionStorage.setItem("isLoggingOut", "true");
+			logout();
+			hideDropdown();
+
+			setTimeout(() => {
+				navigate("/", { replace: true });
+				sessionStorage.removeItem("isLoggingOut");
+				sessionStorage.removeItem("origin");
+			}, 3000);
+		} catch (error) {
+			console.error(error.message);
+		}
 	};
 
 	return (

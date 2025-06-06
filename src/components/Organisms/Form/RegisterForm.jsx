@@ -11,6 +11,8 @@ import showPasswordIcon from "@assets/eye-off.png";
 import storeUser from "@store/storeUser";
 import storeNavigation from "@store/storeNavigation";
 
+import { saveUserData } from "@api/users/saveUserData";
+
 const RegisterSchema = z.object({
 	fullName: z.string().min(1, { message: "Nama tidak boleh kosong" }),
 	email: z.string().email({ message: "Email tidak valid" }),
@@ -21,7 +23,7 @@ const RegisterSchema = z.object({
 
 const RegisterForm = () => {
 	const deletedUsers = storeUser((state) => state.deletedUsers);
-	const register = storeUser((state) => state.register);
+	// const register = storeUser((state) => state.register);
 	const navigate = useNavigate();
 	const setLocation = storeNavigation((state) => state.setLocation);
 
@@ -77,11 +79,11 @@ const RegisterForm = () => {
 		const { name, value } = e.target;
 		setUserData((prev) => ({
 			...prev,
-			[name]: value || ""
+			[name]: value
 		}));
 	};
 
-	const handleRegister = (e) => {
+	const handleRegister = async (e) => {
 		e.preventDefault();
 
 		const email = e.target.email.value;
@@ -130,11 +132,16 @@ const RegisterForm = () => {
 				return;
 			}
 
-			const success = register(userData);
+			try {
+				const success = await saveUserData(userData);
 
-			if (success) {
-				showToast("success", "Registrasi berhasil!", { onClose: () => navigate("/login") });
-				resetForm();
+				if (success) {
+					showToast("success", "Registrasi berhasil!", { onClose: () => navigate("/login") });
+					resetForm();
+				}
+			} catch (error) {
+				console.error("Kesalahan saat menyimpan data pengguna:", error);
+				showToast("error", "Terjadi kesalahan saat registrasi.");
 			}
 		}
 	};

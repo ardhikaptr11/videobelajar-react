@@ -19,8 +19,7 @@ import storeUser from "@store/storeUser";
 
 const AppsRouting = () => {
 	const currentUser = storeUser((state) => state.currentUser);
-	const getLoginStatus = storeUser((state) => state.getLoginStatus);
-	const isLoggedIn = getLoginStatus(currentUser);
+	const isLoggedIn = !!currentUser;
 
 	const origin = sessionStorage.getItem("origin");
 

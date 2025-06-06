@@ -9,22 +9,21 @@ import Input from "@components/Atoms/Input/Input";
 import Button from "@components/Atoms/Button/Button";
 import storeUser from "@store/storeUser";
 
+import { updateUserData } from "@api/users/updateUserData";
+import { deleteUserData } from "@api/users/deleteUserData";
+
 const ProfilePage = () => {
 	const navigate = useNavigate();
 	const MySwal = withReactContent(Swal);
 
-	const getGravatarUrl = storeUser((state) => state.getGravatarUrl);
 	const currentUser = storeUser((state) => state.currentUser);
-	const findUser = storeUser((state) => state.findUser);
-	const updateProfile = storeUser((state) => state.updateProfile);
-	const deleteUser = storeUser((state) => state.deleteUser);
-	const userData = findUser(currentUser);
+	const getGravatarUrl = storeUser((state) => state.getGravatarUrl);
 	const userAvatar = getGravatarUrl(currentUser, 250);
 
 	const [inputValues, setInputValues] = useState({
-		fullName: userData.fullName,
-		email: userData.email,
-		phone: userData.phone
+		fullName: currentUser.fullName,
+		email: currentUser.email,
+		phone: currentUser.phone
 	});
 
 	const [isEdit, setIsEdit] = useState({
@@ -76,7 +75,7 @@ const ProfilePage = () => {
 
 	const isErrorOccurred = Object.values(isError).some((error) => error !== "");
 	const isInEditState = Object.values(isEdit).some((edit) => edit === true);
-	const hasNoChange = Object.keys(inputValues).every((key) => inputValues[key] === userData[key]);
+	const hasNoChange = Object.keys(inputValues).every((key) => inputValues[key] === currentUser[key]);
 
 	const doDelete = async () => {
 		return MySwal.fire({
@@ -114,7 +113,7 @@ const ProfilePage = () => {
 			sessionStorage.setItem("isDeleting", "true");
 			await doDelete();
 			sessionStorage.removeItem("origin");
-			deleteUser(userData.email);
+			deleteUserData(currentUser.email);
 
 			setTimeout(() => {
 				navigate("/signup", { replace: true });
@@ -127,7 +126,7 @@ const ProfilePage = () => {
 		}
 	};
 
-	const handleUpdate = (e) => {
+	const handleUpdate = async (e) => {
 		e.preventDefault();
 		setIsEdit({
 			fullName: false,
@@ -135,12 +134,30 @@ const ProfilePage = () => {
 			phone: false
 		});
 
-		MySwal.fire({
-			title: "Sukses!",
-			text: "Data berhasil diperbarui.",
-			icon: "success"
-		});
-		updateProfile(currentUser, inputValues);
+		try {
+			const userId = currentUser.id;
+			const updatedData = await updateUserData(userId, { ...inputValues });
+
+			if (!updatedData) {
+				throw new Error("Terjadi kesalahan saat memperbarui data.");
+			}
+
+			MySwal.fire({
+				title: "Sukses!",
+				text: "Data berhasil diperbarui.",
+				icon: "success"
+			});
+
+			storeUser.setState({
+				currentUser: updatedData
+			});
+		} catch (error) {
+			MySwal.fire({
+				title: "Gagal!",
+				text: error.message,
+				icon: "error"
+			});
+		}
 	};
 
 	return (
@@ -197,7 +214,7 @@ const ProfilePage = () => {
 					<Input
 						type="text"
 						name="gender"
-						value={userData.gender === "men" ? "Laki-laki" : "Perempuan"}
+						value={currentUser.gender === "men" ? "Laki-laki" : "Perempuan"}
 						id="gender"
 						className="text-base p-1 h-[30px] border border-solid border-[#e1dfdf] rounded-[4px] mr-7 row-start-2 col-start-1 min-[992px]:row-start-1 min-[992px]:col-start-2"
 						disabled

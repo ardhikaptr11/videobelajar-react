@@ -45,7 +45,7 @@ const Heroku = ({ position = "front-page", ...props }) => {
 			</div>
 			<div className="w-fit flex gap-x-2 items-center">
 				<Rating
-					initialValue={props.course.rating}
+					initialValue={props.course.courseInfo.rating}
 					allowFraction={true}
 					readonly={true}
 					size={24}
@@ -54,7 +54,7 @@ const Heroku = ({ position = "front-page", ...props }) => {
 				/>
 				<p className="text-[0.75em]/[16.8px] font-medium tracking-normal min-[768px]:text-[0.875em]/[19.6px]">
 					<u>
-						{props.course.rating} ({props.course.totalReviews})
+						{props.course.courseInfo.rating} ({props.course.courseInfo.totalReviews})
 					</u>
 				</p>
 			</div>

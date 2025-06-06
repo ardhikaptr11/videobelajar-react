@@ -4,8 +4,8 @@ import Card from "@components/Atoms/Card/Card";
 import CollapsibleAccordion from "@components/Molecules/CollapsibleAccordion/CollapsibleAccordion";
 
 const DetailsContent = ({ course }) => {
-	const instructors = course.courseInfo.instructors;
-	const alumni = course.courseInfo.alumni;
+	const instructors = course.instructors;
+	const alumni = course.alumni;
 
 	return (
 		<article className="flex flex-col gap-y-6 w-full order-2 min-[992px]:order-1">
@@ -29,8 +29,8 @@ const DetailsContent = ({ course }) => {
 				<h5 className="w-fit font-poppins font-semibold text-[1.125em]/[21.6px] text-black tracking-normal min-[992px]:text-[1.25em]/[24px]">
 					Kamu akan Mempelajari
 				</h5>
-				{course.courseInfo.courseDetails.modules.map((detail, index) => (
-					<CollapsibleAccordion key={index} data={detail} for="module" />
+				{course.modules.map((module) => (
+					<CollapsibleAccordion key={module.id} data={module} for="module" />
 				))}
 			</section>
 			<section className="flex flex-col gap-y-6 p-5 border border-solid border-[#3a35411f] rounded-[10px] min-[992px]:p-6">

@@ -8,11 +8,11 @@ import worldIcon from "@assets/world-icon.png";
 import certificateIcon from "@assets/file-certificate.png";
 
 const CourseFeatures = ({ course }) => {
-	const courseDetails = course.courseInfo.courseDetails;
+	const features = course.features;
 
-	const keys = Object.keys(courseDetails);
+	const keys = Object.keys(features);
 	const dynamicDivs = keys.map((key) => {
-		const item = courseDetails[key];
+		const item = features[key];
 
 		switch (key) {
 			case "totalDocument":
@@ -78,9 +78,9 @@ const CourseFeatures = ({ course }) => {
 				<div className="flex items-center gap-x-4">
 					<img src={worldIcon} alt="Language Used" />
 					<p className="font-poppins text-[0.875em]/[21px] font-medium">
-						{Array.isArray(courseDetails.featuredLanguage)
-							? courseDetails.featuredLanguage.join(", ")
-							: courseDetails.featuredLanguage}
+						{Array.isArray(features.featuredLanguage)
+							? features.featuredLanguage.join(", ")
+							: features.featuredLanguage}
 					</p>
 				</div>
 			</div>
