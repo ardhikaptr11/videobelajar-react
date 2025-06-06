@@ -19,27 +19,6 @@ const storeUser = create(
 
 				const gravatarImage = `https://www.gravatar.com/avatar/${uniqueId}?d=${defaultImage}`;
 				return gravatarImage;
-<<<<<<< HEAD
-			},
-			updateProfile: (email, updatedUser) => {
-				const foundUser = get().findUser(email);
-
-				if (!foundUser) return;
-
-				const userKey = Object.keys(get().users).find((key) => get().users[key].email === foundUser.email);
-
-					set((state) => ({
-						currentUser: updatedUser.email,
-					users: {
-						...state.users,
-						[userKey]: {
-							...foundUser,
-							...updatedUser
-						}
-					}
-					}));
-=======
->>>>>>> firebase-dev
 			}
 		}),
 		{
