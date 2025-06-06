@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getAuth } from "firebase/auth";
 
 export const axiosClient = axios.create({
 	baseURL:
@@ -11,8 +12,20 @@ export const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use(
-	(config) => {
-		return config.url.startsWith(":") ? { ...config, url: `${config.baseURL}${config.url}` } : config;
+	async (config) => {
+		const auth = getAuth();
+		const user = auth.currentUser;
+
+		if (user) {
+			const token = await user.getIdToken();
+			config.headers.Authorization = `Bearer ${token}`;
+		}
+
+		if (config.url.startsWith(":")) {
+			config.url = `${config.baseURL}${config.url}`;
+		}
+
+		return config;
 	},
 	(error) => Promise.reject(error)
 );
