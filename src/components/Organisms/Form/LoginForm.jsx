@@ -95,47 +95,6 @@ const LoginForm = () => {
 		});
 	};
 
-<<<<<<< HEAD
-	const handleSuccess = useCallback(
-		(message) => {
-			showToast("success", message, {
-				onClose: () => navigate("/", { replace: true })
-			});
-		resetForm();
-		},
-		[navigate]
-	);
-
-	const handleError = useCallback((message) => {
-		showToast("error", message);
-	}, []);
-
-	useEffect(() => {
-		if (!isLoginReady) return;
-
-		setIsLoginReady(false);
-
-		const foundUser = findUser(credentials.email);
-
-		if (!foundUser) {
-			handleError("Akun tidak ditemukan!");
-			return;
-		}
-
-		const message = foundUser.password === credentials.password ? "Login Berhasil!" : "Email dan password salah!";
-
-		if (foundUser.password === credentials.password) {
-			!sessionStorage.getItem("origin") && sessionStorage.setItem("origin", "/login");
-			handleSuccess(message);
-		} else {
-			handleError(message);
-		}
-	}, [isLoginReady, findUser, handleSuccess, handleError]);
-
-	const handleLogin = (e) => {
-		e.preventDefault();
-		login(credentials.email, credentials.password);
-=======
 	const handleLogin = async (e) => {
 		e.preventDefault();
 
@@ -147,7 +106,6 @@ const LoginForm = () => {
 		}
 
 		setFoundUser(user);
->>>>>>> firebase-dev
 		setIsLoginReady(true);
 	};
 
