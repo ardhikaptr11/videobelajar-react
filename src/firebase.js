@@ -18,4 +18,4 @@ const db = getFirestore(app);
 
 import.meta.env.VITE_DEV === "true" && connectFirestoreEmulator(db, "127.0.0.1", 8080);
 
-export { db };
+export { app, db };
